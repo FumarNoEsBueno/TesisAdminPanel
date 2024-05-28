@@ -1,0 +1,41 @@
+<p-card>
+  <div style="display: flex; justify-content: space-between;">
+    <div>
+        <span style="font-weight: bold;">
+          Codigo:
+        </span>
+        <span>
+          {{compra.compra_codigo}}
+        </span><br>
+        <span style="font-weight: bold;">
+          Estado:
+        </span>
+        <span>
+          {{compra.estado_compra.estado_compra_nombre}}
+        </span><br>
+    </div>
+    @switch(compra.estado_compra.estado_compra_nombre){
+    @case(estadosCompra[0].name){
+    <div style="display: flex; flex-direction: column;">
+      <p-button label="Aprobar" (onClick)="aprobarCompra()"/>
+      <p-button label="Reprobar" (onClick)="reprobarCompra()"/>
+    </div>
+    }
+    @case(estadosCompra[1].name){
+    }
+    @case(estadosCompra[2]){
+    }
+    @case(estadosCompra[3]){
+    }
+    @case(estadosCompra[4]){
+    }
+
+    }
+    <p-scrollPanel [style]="{ width: '100%', maxHeight: '250px' }">
+      @for (disco of discos; track disco.id) {
+      <app-mostrador-compra [producto]="disco" [eliminable]="false">
+      </app-mostrador-compra>
+      }
+    </p-scrollPanel>
+  </div>
+</p-card>

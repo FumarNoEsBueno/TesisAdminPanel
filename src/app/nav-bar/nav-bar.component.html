@@ -1,0 +1,11 @@
+<p-menubar [model]="items">
+  <div style="display: flex">
+    <div style="margin-right: 2%;">
+    </div>
+      <p-splitButton
+        label="Perfil"
+        icon="pi pi-user"
+        (onClick)="aLogin()"
+        [model]="opciones" />
+  </div>
+</p-menubar>

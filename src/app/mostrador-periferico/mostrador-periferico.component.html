@@ -1,0 +1,67 @@
+<div style="display: flex;">
+
+  <div style="margin-right: 1%;" [style]="{ width: '20%' }">
+    <p-card header="Discos duros">
+
+      <p-accordion [activeIndex]="[0,1,2,3,4,5]" [multiple]="true">
+        <p-accordionTab header="Disponibilidad">
+          @for (disponibilidad of disponibilidades; track disponibilidades.disponibilidad_nombre) {
+          <div class="flex align-items-center">
+            <p-checkbox (onChange)="onFilterChange()" name="disponibilidad" value="{{disponibilidad.id}}" label="{{disponibilidad.disponibilidad_nombre}}" [(ngModel)]="disponibilidadesModel"></p-checkbox>
+          </div>
+          }
+        </p-accordionTab>
+        <p-accordionTab header="Estado">
+          @for (estado of estados; track estado.estado_nombre) {
+          <div class="flex align-items-center">
+            <p-checkbox (onChange)="onFilterChange()" name="estado" value="{{estado.id}}" label="{{estado.estado_nombre}}" [(ngModel)]="estadosModel"></p-checkbox>
+          </div>
+          }
+        </p-accordionTab>
+        <p-accordionTab header="Marcas">
+          @for (marca of marcas; track marcas.marca_nombre) {
+          <div class="flex align-items-center">
+            <p-checkbox (onChange)="onFilterChange()" name="marca" value="{{marca.id}}" label="{{marca.marca_nombre}}" [(ngModel)]="marcasModel"></p-checkbox>
+          </div>
+          }
+        </p-accordionTab>
+        <p-accordionTab header="Precio">
+          @for (precio of precios; track precio.precio_nombre) {
+          <div class="flex align-items-center">
+            <p-checkbox (onChange)="onFilterChange()" name="precio" value="{{precio.id}}" label="{{precio.precio_nombre}}" [(ngModel)]="preciosModel"></p-checkbox>
+          </div>
+          }
+        </p-accordionTab>
+      </p-accordion>
+    </p-card>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap;" [style]="{ width: '80%' }">
+    @if(loading){
+    <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    </div>
+    }
+    @if(!loading){
+    @for (periferico of perifericos; track periferico.id) {
+    <div style="margin-right: 10px; margin-bottom: 10px;">
+      <app-mostrador-producto
+        [producto]="periferico"
+        >
+      </app-mostrador-producto>
+    </div>
+    }
+    }
+    <div style="display: block; width: 80%;">
+      <div style="clear: both;"></div>
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first" [rows]="rows"
+        [totalRecords]="totalRecords">
+      </p-paginator>
+    </div>
+  </div>
+</div>
+
+
+

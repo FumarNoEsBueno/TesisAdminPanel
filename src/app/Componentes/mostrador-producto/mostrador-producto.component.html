@@ -1,0 +1,45 @@
+<div style="max-width: 293px;">
+  <p-card>
+    <div class="flex align-items-center">
+      <p-image  (click)="mostrarDetalles()" src="http://localhost:8000/api/images/{{producto.imagenUrl}}" alt="Image" height="250" width="250"></p-image>
+    </div>
+    <div>
+      <span style="font-weight: bold;">
+        {{producto.nombre}}
+      </span><br>
+      <span>
+        Precio: {{producto.precio}} Clp.
+      </span><br>
+      @switch(producto.tipoProducto){
+      @case("disco"){
+      <span style="word-wrap: break-word;">
+        {{producto.memoria}} GB, {{producto.marca}}, tamaño: {{producto.tamano}}, sistema de archivos: {{producto.sistemaArchivos}}.
+      </span>
+      }
+      @case("periferico"){
+      <span style="word-wrap: break-word;">
+        Tipo: {{producto.tipo_periferico}}, entrada: {{producto.tipo_entrada}}, Marca: {{producto.marca}}.
+      </span>
+      }
+      @case("ram"){
+      }
+      }
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+      <div style="display: flex; margin-top: 20px;">
+        <p-button size="small" (onClick)="guardarCambios()">
+          save
+        </p-button>
+    </div>
+      <div style="display: flex; margin-right: 10px; margin-top: 20px; text-align: right;">
+        <p-dropdown
+          [options]="descuentos"
+          [(ngModel)]="selectedDescuento"
+          optionLabel="descuento_porcentaje"
+          placeholder="Seleccione descuento" />
+      </div>
+    </div>
+  </p-card>
+</div>
+
+<p-toast />

@@ -1,0 +1,23 @@
+<div>
+  <p-card>
+    <div style="display: flex; justify-content: space-between;">
+      <div style="display: flex;">
+        <p-image src="http://localhost:8000/api/images/{{producto.imagenUrl}}" alt="Image" height="75" width="75"></p-image>
+      <div>
+        <span style="font-weight: bold;">
+          {{producto.nombre}}
+        </span><br>
+        <span>
+          Precio: {{producto.precio}} Clp.
+        </span><br>
+      </div>
+      </div>
+      @if(eliminable){
+      <div style="align-self: flex-end;">
+        <p-button (click)="eliminarDiscoDuro()" icon="pi pi-trash" size="small">
+        </p-button>
+      </div>
+      }
+    </div>
+  </p-card>
+</div>
