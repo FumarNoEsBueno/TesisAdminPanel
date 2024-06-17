@@ -35,7 +35,8 @@ export class NavBarComponent {
       {label: 'Discos duros',  routerLink: ['./disco-duro']},
       {label: 'Memorias ram',  routerLink: ['./ram']},
       {label: 'Perifericos',  routerLink: ['./periferico']},
-      {label: 'Gestion de compras',  routerLink: ['./gestion-compras']},
+      {label: 'Gestion de ventas',  routerLink: ['./gestion-ventas']},
+      {label: 'Estadisticas',  routerLink: ['./estadisticas-ventas']},
     ];
 
     aLogin(){

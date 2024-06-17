@@ -27,28 +27,53 @@ export class MostradorHistorialComponent {
   @Input() compra: any;
   @Input() estados: any;
 
+  @Output() actualzarEvent = new EventEmitter<any>();
+
   selectedEstado: any;
   estadosCompra: any;
   discos: Producto[] = [];
 
   pedidoPreparado(){
+    if(this.compra.metodo_despacho.metodo_despacho_slug == "retiro"){
+      let tempEstado = this.estados.find(
+        (estado: any) => estado.estado_compra_slug == "listo");
+        this.actualizarEstadoCompra(tempEstado);
+    }else{
+      let tempEstado = this.estados.find(
+        (estado: any) => estado.estado_compra_slug == "transporte");
+        this.actualizarEstadoCompra(tempEstado);
+    }
   }
 
-  cofirmarRetiro(){
+  confirmarRetiro(){
+    let tempEstado = this.estados.find(
+      (estado: any) => estado.estado_compra_slug == "retirado");
+    this.actualizarEstadoCompra(tempEstado);
   }
 
-  cofirmarRecepcion(){
+  confirmarRecepcion(){
+    let tempEstado = this.estados.find(
+      (estado: any) => estado.estado_compra_slug == "cancelado");
+    this.actualizarEstadoCompra(tempEstado);
   }
 
   reprobarCompra(){
+    let tempEstado = this.estados.find(
+      (estado: any) => estado.estado_compra_slug == "cancelado");
+    this.actualizarEstadoCompra(tempEstado);
   }
 
   aprobarCompra(){
+    let tempEstado = this.estados.find(
+      (estado: any) => estado.estado_compra_slug == "preparando");
+    this.actualizarEstadoCompra(tempEstado);
   }
 
   actualizarEstadoCompra(estado: any){
-    this.comprasService.updateEstadoCompra(estado).subscribe({
-      next: (res) => {
+    this.comprasService.updateEstadoCompra(estado, this.compra.id).subscribe({
+      next: (res: any) => {
+        this.compra = res;
+        this.actualzarEvent.emit(res);
       }
     });
   }
@@ -56,6 +81,7 @@ export class MostradorHistorialComponent {
   ngOnInit(){
     this.estadosCompra = this.estados.map((e: any) => ({
       name: e.estado_compra_nombre,
+      slug: e.estado_compra_slug,
       code: e.id
     }));
     this.selectedEstado = this.estadosCompra.find(
@@ -63,7 +89,8 @@ export class MostradorHistorialComponent {
     this.compra.discos.forEach((disco: any) => {
       this.discos.push(new Producto(disco));
     });
-    console.log(this.estadosCompra);
-    console.log(this.compra);
+    this.compra.perifericos.forEach((disco: any) => {
+      this.discos.push(new Producto(disco));
+    });
   }
 }

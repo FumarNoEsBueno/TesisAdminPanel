@@ -13,6 +13,11 @@ export class ComprasService {
     private http:HttpClient
   ) { }
 
+
+  getTipoPeriferico(){
+    return this.http.get(this.url + 'parametros/tipo_periferico');
+  }
+
   getDescuentos(){
     return this.http.get(this.url + 'get_descuentos');
   }
@@ -37,10 +42,14 @@ export class ComprasService {
     return this.http.get(this.url + 'parametros/marca');
   }
 
-  updateEstadoCompra(estado: any){
+  updateEstadoCompra(estado: any, compraId: any){
+    let body = {
+      compraId: compraId,
+      estadoId: estado.id
+    };
     let token = localStorage.getItem( 'MidTechAdminToken' );
     const headers = new HttpHeaders().set("Authorization","Bearer " + token);
-    return this.http.post(this.url + 'update_compra_estado', estado, { headers });
+    return this.http.post(this.url + 'update_estado_compra', body, { headers });
   }
 
   updateProducto(producto: Producto){
@@ -59,6 +68,12 @@ export class ComprasService {
 
   getPerifericos(){
     return this.http.get(this.url + 'perifericos');
+  }
+
+  getVentasParaEstadisticas(){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.get(this.url + 'get_ventas_para_estadisticas', { headers });
   }
 
   getCompras(){

@@ -1,0 +1,94 @@
+<p-card header="Ventas por producto">
+
+  <div style="display: flex; justify-content: space-between;">
+    <div class="card flex justify-content-center">
+      <div class="flex flex-wrap gap-3">
+        <div class="flex align-items-center">
+          <span>Calcular segun:</span>
+        </div>
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="Tipo producto"
+            value="producto"
+            (onClick)="calcularPorProducto()"
+            [(ngModel)]="parametroCalculo"
+            inputId="parametroCalculo1" />
+            <label for="parametroCalculo1" class="ml-2">
+              Tipo producto
+            </label>
+        </div>
+
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="Marca"
+            value="marca"
+            (onClick)="calcularPorMarca()"
+            [(ngModel)]="parametroCalculo"
+            inputId="parametroCalculo2" />
+            <label for="parametroCalculo2" class="ml-2">
+              Marca
+            </label>
+        </div>
+
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="precio"
+            value="precio"
+            (onClick)="calcularPorPrecio()"
+            [(ngModel)]="parametroCalculo"
+            inputId="parametroCalculo3" />
+            <label for="parametroCalculo3" class="ml-2">
+              Precio
+            </label>
+        </div>
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="usuario"
+            value="usuario"
+            (onClick)="calculateComprasPorUsuario()"
+            [(ngModel)]="parametroCalculo"
+            inputId="parametroCalculo4" />
+            <label for="parametroCalculo4" class="ml-2">
+              Usuario
+            </label>
+        </div>
+      </div>
+    </div>
+    <div class="card flex"
+      style="margin-right: auto; margin-left: 30px">
+      Opciones:
+      @switch(parametroCalculo){
+        @case("producto"){
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="ninguno"
+            value="ninguno"
+            (onClick)="calcularPorProducto()"
+            [(ngModel)]="subParametroCalculo"
+            inputId="subParametroCalculo" />
+            <label for="subParametroCalculo" class="ml-2">
+              N/A
+            </label>
+        </div>
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="diferenciar"
+            value="diferenciar"
+            (onClick)="calcularPorProducto()"
+            [(ngModel)]="subParametroCalculo"
+            inputId="subParametroCalculo2" />
+            <label for="subParametroCalculo2" class="ml-2">
+              Diferenciar perifericos
+            </label>
+        </div>
+        }
+      }
+    </div>
+    <div class="card flex"
+      style="margin-right: auto;">
+      <p-chart
+        type="pie" [data]="data"
+        [options]="options" />
+    </div>
+  </div>
+</p-card>

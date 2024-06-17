@@ -6,6 +6,7 @@ import { MostradorPerifericoComponent } from './mostrador-periferico/mostrador-p
 import { LoginComponent } from './login/login.component';
 import { RecoverComponent } from './recover/recover.component';
 import { GestionComprasComponent } from './Componentes/gestion-compras/gestion-compras.component';
+import { EstadisticasVentasComponent } from './estadisticas-ventas/estadisticas-ventas.component';
 
 export const routes: Routes = [{
   path: 'home',
@@ -28,9 +29,13 @@ export const routes: Routes = [{
   component: LoginComponent,
   title: 'MidTech: login'
 },{
-  path: 'gestion-compras',
+  path: 'gestion-ventas',
   component: GestionComprasComponent,
-  title: 'MidTech: gestion compras'
+  title: 'MidTech: gestion ventas'
+},{
+  path: 'estadisticas-ventas',
+  component: EstadisticasVentasComponent,
+  title: 'MidTech: estadisticas ventas'
 },{
   path: 'recover',
   component: RecoverComponent,

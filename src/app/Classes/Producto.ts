@@ -25,7 +25,7 @@ export class Producto {
 
     if(producto.periferico_nombre != null){
       this.tipoProducto = "periferico";
-      this.nombre = producto.periferico.periferico_nombre;
+      this.nombre = producto.periferico_nombre;
       this.imagenUrl = producto.periferico_foto;
       this.precio = producto.periferico_precio;
       this.marca = producto.marca_nombre;

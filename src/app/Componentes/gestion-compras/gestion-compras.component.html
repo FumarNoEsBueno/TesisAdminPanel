@@ -1,4 +1,8 @@
 @for (compra of compras; track compra) {
-  <app-mostrador-historial [estados]="estadoCompra" [compra]="compra"/>
+  <app-mostrador-historial
+    (actualzarEvent)="show($event)"
+    [estados]="estadoCompra"
+    [compra]="compra"/>
 }
 
+<p-toast />

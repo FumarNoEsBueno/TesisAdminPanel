@@ -22,12 +22,25 @@
     </div>
     }
     @case(estadosCompra[1].name){
+    @if(compra.metodo_despacho.metodo_despacho_slug == "retiro"){
+    <div style="display: flex; flex-direction: column;">
+      <p-button label="Pedido preparado" (onClick)="pedidoPreparado()"/>
+    </div>
+    }@else{
+    <div style="display: flex; flex-direction: column;">
+      <p-button label="Pedido en transporte" (onClick)="pedidoPreparado()"/>
+    </div>
     }
-    @case(estadosCompra[2]){
     }
-    @case(estadosCompra[3]){
+    @case(estadosCompra[2].name){
+    <div style="display: flex; flex-direction: column;">
+      <p-button label="Confirmar retiro" (onClick)="confirmarRetiro()"/>
+    </div>
     }
-    @case(estadosCompra[4]){
+    @case(estadosCompra[3].name){
+    <div style="display: flex; flex-direction: column;">
+      <p-button label="Confirmar entrega" (onClick)="confirmarRecepcion()"/>
+    </div>
     }
 
     }
