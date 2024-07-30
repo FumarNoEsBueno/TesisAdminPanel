@@ -1,15 +1,19 @@
-<div style="max-width: 293px;">
+<div style="max-width: 290px;">
   <p-card>
     <div class="flex align-items-center">
       <p-image  (click)="mostrarDetalles()" src="http://localhost:8000/api/images/{{producto.imagenUrl}}" alt="Image" height="250" width="250"></p-image>
     </div>
     <div>
-      <span style="font-weight: bold;">
+            <span style="font-weight: bold;">
         {{producto.nombre}}
       </span><br>
-      <span>
-        Precio: {{producto.precio}} Clp.
-      </span><br>
+      @if(producto.descuento != null){
+      <del> Precio: {{producto.precio}} Clp.</del><span> -{{producto.descuento}}%</span><br>
+      <span> Precio: {{(producto.precio * (100 - producto.descuento))/100}} Clp.</span><br>
+      }@else{
+      <span> Precio: {{producto.precio}} Clp.</span><br>
+      }
+      <span> Estado: {{producto.estado}}.</span><br>
       @switch(producto.tipoProducto){
       @case("disco"){
       <span style="word-wrap: break-word;">
@@ -22,22 +26,30 @@
       </span>
       }
       @case("ram"){
+      <span style="word-wrap: break-word;">
+        Tipo: {{producto.tipo_ram}}, capacidad: {{producto.capacidad}} GB, tamaño: {{producto.tamano_ram}} velocidad: {{producto.velocidad_ram}}, Marca: {{producto.marca}}.
+      </span>
+      }
+      @case("cable"){
+      <span style="word-wrap: break-word;">
+        Unidades disponibles: {{producto.cantidad}}, precio: {{producto.precio}}, marca: {{producto.marca}}, tipo de entrada: {{producto.tipo_entrada}}.
+      </span>
       }
       }
     </div>
-    <div style="display: flex; justify-content: space-between;">
-      <div style="display: flex; margin-top: 20px;">
-        <p-button size="small" (onClick)="guardarCambios()">
-          save
-        </p-button>
-    </div>
-      <div style="display: flex; margin-right: 10px; margin-top: 20px; text-align: right;">
+    <div>
         <p-dropdown
           [options]="descuentos"
           [(ngModel)]="selectedDescuento"
           optionLabel="descuento_porcentaje"
           placeholder="Seleccione descuento" />
-      </div>
+    </div>
+    <div>
+        <p-button
+          size="small"
+          (onClick)="guardarCambios()">
+          save
+        </p-button>
     </div>
   </p-card>
 </div>

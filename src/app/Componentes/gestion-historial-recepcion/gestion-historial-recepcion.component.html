@@ -1,0 +1,69 @@
+<div>
+  <p-card>
+  <div style="display: flex;">
+      <div>
+        <span style="font-weight: bold;">
+          Codigo:
+        </span>
+        <span>
+          {{recepcion.solicitud_recepcion_codigo}}
+        </span><br>
+        <span style="font-weight: bold;">
+          Estado:
+        </span>
+        <span>
+          {{recepcion.recepcion_estado.recepcion_estado_nombre}}.
+        </span><br>
+        <span style="font-weight: bold;">
+          Peso aproximado:
+        </span>
+        <span>
+          {{recepcion.solicitud_recepcion_peso_aproximado}} Kg.
+        </span><br>
+        <span style="font-weight: bold;">
+          Volumen aproximado:
+        </span>
+        <span>
+          {{recepcion.solicitud_recepcion_peso_aproximado}} M².        </span><br>
+        <span style="font-weight: bold;">
+          Descripción:
+        </span>
+        <span>
+          {{recepcion.solicitud_recepcion_descripcion}}
+        </span><br>
+      </div>
+      <!--
+      <div [style]="{ marginLeft: '30px' }">
+        <span style="font-weight: bold;">
+          Peso calculado:
+        </span>
+        <span>
+          @if(recepcion.solicitud_recepcion_peso_calculado){
+          {{recepcion.solicitud_recepcion_peso_calculado}}
+          }@else{
+          XXX
+          }
+        </span><br>
+      </div>
+        -->
+      <div style="margin-left: auto">
+      @switch(recepcion.recepcion_estado.recepcion_estado_nombre){
+      @case("No recepcionado"){
+      <p-button
+        [style]="{ marginRight: '3px' }"
+        (onClick)="sendCancelDialog()"
+        size="small">
+        Cancelar
+      </p-button>
+      <p-button
+        (onClick)="sendConfirmDialog()"
+        size="small">
+        Confirmar
+      </p-button>
+      }
+      }
+    </div>
+    </div>
+  </p-card>
+    </div>
+

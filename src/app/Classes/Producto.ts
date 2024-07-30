@@ -19,9 +19,19 @@ export class Producto {
   descripcion: any;
   tipo_periferico: any;
 
+
+  tipo_ram: any;
+  tamano_ram: any;
+  velocidad_ram: any;
+  capacidad: any;
+
+  cantidad: any;
+  cantidad_seleccionada: any;
+
   constructor(producto: any) {
 
     this.id = producto.id;
+    this.descuento = producto.descuento_porcentaje;
 
     if(producto.periferico_nombre != null){
       this.tipoProducto = "periferico";
@@ -31,7 +41,6 @@ export class Producto {
       this.marca = producto.marca_nombre;
       this.tipo_entrada = producto.tipo_entrada_nombre;
       this.tipo_periferico = producto.nombre_tipo_periferico;
-      this.descuento = producto.descuento_porcentaje;
     }
 
     if(producto.disco_duro_nombre != null){
@@ -47,8 +56,34 @@ export class Producto {
       this.sistemaArchivos = producto.sistema_archivos_nombre;
       this.tipo_entrada = producto.tipo_entrada;
       this.tamano = producto.tamano_nombre;
-      this.descuento = producto.descuento_porcentaje;
     }
+
+    if(producto.cable_nombre != null){
+      this.tipoProducto = "cable";
+      this.cantidad = producto.cable_cantidad;
+      this.nombre = producto.cable_nombre;
+      this.precio = producto.cable_precio;
+      this.imagenUrl = producto.cable_foto;
+      this.marca = producto.marca_nombre;
+      this.tipo_entrada = producto.tipo_entrada_nombre;
+      this.cantidad_seleccionada = 0;
+      if(producto.pivot != null){
+        this.cantidad_seleccionada = producto.pivot.compra_cable_cantidad;
+      }
+    }
+    if(producto.ram_nombre != null){
+      this.tipoProducto = "ram";
+      this.nombre = producto.ram_nombre;
+      this.imagenUrl = producto.ram_foto;
+      this.precio = producto.ram_precio;
+      this.marca = producto.marca_nombre;
+      this.tipo_ram = producto.tipo_ram_nombre;
+      this.velocidad_ram = producto.velocidad_ram_velocidad;
+      this.tamano_ram = producto.tamano_ram_nombre;
+      this.capacidad = producto.capacidad_ram_capacidad;
+    }
+
+
   }
 
 }

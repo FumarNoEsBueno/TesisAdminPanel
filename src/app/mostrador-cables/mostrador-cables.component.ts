@@ -1,56 +1,47 @@
 import { Component, EventEmitter, Output} from '@angular/core';
-import { AccordionModule } from 'primeng/accordion';
-import { CardModule } from 'primeng/card';
 import { ComprasService } from '../Services/compras.service';
-import { CheckboxModule } from 'primeng/checkbox';
-import { FormsModule } from '@angular/forms';
-import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CardModule } from 'primeng/card';
 import { Producto } from '../Classes/Producto';
+import { AccordionModule } from 'primeng/accordion';
+import { CheckboxModule } from 'primeng/checkbox';
 import { MostradorProductoComponent } from '../Componentes/mostrador-producto/mostrador-producto.component';
+import { PaginatorModule } from 'primeng/paginator';
 import { LoginServiceService } from '../Services/login-service.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-mostrador-ram',
+  selector: 'app-mostrador-cables',
   standalone: true,
-  imports: [CheckboxModule,
-    ProgressSpinnerModule,
-    FormsModule,
-    MostradorProductoComponent,
+  imports: [CardModule,
+    AccordionModule,
     PaginatorModule,
-    CardModule,
-    AccordionModule],
-  templateUrl: './mostrador-ram.component.html',
-  styleUrl: './mostrador-ram.component.css'
+    CheckboxModule,
+    MostradorProductoComponent,
+    ProgressSpinnerModule,
+  ],
+  templateUrl: './mostrador-cables.component.html',
+  styleUrl: './mostrador-cables.component.css'
 })
-export class MostradorRamComponent {
+export class MostradorCablesComponent {
 
   constructor(private loginService: LoginServiceService,
-              private comprasService: ComprasService,
-              private router: Router) { }
+              private router: Router,
+              private comprasService: ComprasService){}
 
-  rams: any;
+  @Output() agregarAlCarroOutput = new EventEmitter<Producto>();
 
-  loading = true;
-
-  first = 1;
-  page = 1;
-  rows: any;
-  totalRecords: any;
+  cables: any;
 
   estados: any;
   estadosModel: string[] = [];
+
+  tipoEntrada: any;
+  tipoEntradaModel: string[] = [];
+
   marcas: any;
   marcasModel: string[] = [];
-  tipos: any;
-  tipoModel: string[] = [];
-  velocidads: any;
-  velocidadModel: string[] = [];
-  tamanos: any;
-  tamanosModel: string[] = [];
-  capacidad: any;
-  capacidadModel: string[] = [];
+
   precios: any[] = [{
     precio_nombre: "0 - 10.000",
     id: 1
@@ -61,7 +52,14 @@ export class MostradorRamComponent {
     precio_nombre: "20.001 - 30.000",
     id: 3
   }];
+
   preciosModel: any[] = [];
+  rows: any;
+  first = 1;
+  page = 1;
+  totalRecords: any;
+  loading = true;
+
   descuentos: any;
 
   ngOnInit(){
@@ -80,36 +78,29 @@ export class MostradorRamComponent {
       this.descuentos = [{id: null, descuento_porcentaje: 0}];
       this.descuentos = this.descuentos.concat(res);
     });
-    this.comprasService.getVelocidadRam().subscribe((res) => this.velocidads = res);
-    this.comprasService.getTamanoRam().subscribe((res) => this.tamanos = res);
     this.comprasService.getEstados().subscribe((res) => this.estados = res);
     this.comprasService.getMarcas().subscribe((res) => this.marcas = res);
-    this.comprasService.getCapacidadRam().subscribe((res) => this.capacidad = res);
-    this.comprasService.getRams([],[],[],[],[],[],[],[]).subscribe((res: any) =>{
-      this.rams = res.data.map((item: any) => new Producto(item));
-      this.rows = res.per_page;
-      this.totalRecords = res.total;
-      this.loading = false;
-    });
-  }
-
-  reload(){
-    this.onFilterChange();
+    this.comprasService.getTipoEntrada().subscribe((res) => this.tipoEntrada = res);
+    this.comprasService.getCables([],[],[],[],[]).subscribe({
+      next: (res: any) => {
+        this.cables = res.data.map((item: any) => new Producto(item));
+        this.rows = res.per_page;
+        this.totalRecords = res.total;
+        this.loading = false;
+      }
+    })
   }
 
   onFilterChange(){
     this.loading = true;
-    this.comprasService.getRams(
+    this.comprasService.getCables(
       this.page,
       this.estadosModel,
       this.marcasModel,
-      this.capacidadModel,
-      this.tipoModel,
-      this.velocidadModel,
-      this.tamanosModel,
+      this.tipoEntradaModel,
       this.preciosModel).subscribe((res: any) =>{
 
-      this.rams = res.data.map((item: any) => new Producto(item));
+      this.cables = res.data.map((item: any) => new Producto(item));
       this.rows = res.per_page;
       this.totalRecords = res.total;
       this.loading = false;
@@ -119,20 +110,26 @@ export class MostradorRamComponent {
   onPageChange(event: any){
     this.page = event.page + 1;
     this.loading = true;
-    this.comprasService.getRams(
+    this.comprasService.getCables(
       this.page,
       this.estadosModel,
       this.marcasModel,
-      this.capacidadModel,
-      this.tipoModel,
-      this.velocidadModel,
-      this.tamanosModel,
+      this.tipoEntradaModel,
       this.preciosModel).subscribe((res: any) =>{
 
-      this.rams = res.data.map((item: any) => new Producto(item));
+      this.cables =res.data.map((item: any) => new Producto(item));
       this.rows = res.per_page;
       this.totalRecords = res.total;
       this.loading = false;
     });
+  }
+
+
+  agregarAlCarro(cable: Producto){
+    this.agregarAlCarroOutput.emit(cable);
+  }
+
+  reload(){
+    this.onFilterChange();
   }
 }

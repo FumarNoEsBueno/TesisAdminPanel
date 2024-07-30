@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { RecoverComponent } from './recover/recover.component';
 import { GestionComprasComponent } from './Componentes/gestion-compras/gestion-compras.component';
 import { EstadisticasVentasComponent } from './estadisticas-ventas/estadisticas-ventas.component';
+import { GestionRecepcionComponent } from './gestion-recepcion/gestion-recepcion.component';
+import { MostradorCablesComponent } from './mostrador-cables/mostrador-cables.component';
 
 export const routes: Routes = [{
   path: 'home',
@@ -21,6 +23,10 @@ export const routes: Routes = [{
   component: MostradorPerifericoComponent,
   title: 'MidTech: Perifericos'
 },{
+  path: 'cables',
+  component: MostradorCablesComponent,
+  title: 'MidTech: Cables'
+},{
   path: 'disco-duro',
   component: MostradorDiscoDuroComponent,
   title: 'MidTech: Discos duros'
@@ -32,6 +38,10 @@ export const routes: Routes = [{
   path: 'gestion-ventas',
   component: GestionComprasComponent,
   title: 'MidTech: gestion ventas'
+},{
+  path: 'gestion-recepcion',
+  component: GestionRecepcionComponent,
+  title: 'MidTech: gestion recepción'
 },{
   path: 'estadisticas-ventas',
   component: EstadisticasVentasComponent,

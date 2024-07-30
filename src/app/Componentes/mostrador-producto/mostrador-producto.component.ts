@@ -41,7 +41,7 @@ export class MostradorProductoComponent {
   selectedDescuento: any;
 
   ngOnInit(){
-
+    console.log(this.producto);
     this.selectedDescuento = this.descuentos.find(
       (descuento: any) => this.producto.descuento == descuento.descuento_porcentaje);
   }
@@ -53,7 +53,6 @@ export class MostradorProductoComponent {
   guardarCambios(){
     this.producto.descuento = this.selectedDescuento.descuento_porcentaje;
     this.producto.descuentoId = this.selectedDescuento.id;
-    console.log(this.producto);
     this.comprasService.updateProducto(this.producto).subscribe((res: any) => {
       this.show();
     });

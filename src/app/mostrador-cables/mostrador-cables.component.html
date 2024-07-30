@@ -1,7 +1,7 @@
 <div style="display: flex;">
 
   <div style="margin-right: 1%;" [style]="{ width: '20%' }">
-    <p-card header="Rams">
+    <p-card header="Discos duros">
 
       <p-accordion [activeIndex]="[0,1,2,3,4,5]" [multiple]="true">
         <p-accordionTab header="Estado">
@@ -18,44 +18,12 @@
           </div>
           }
         </p-accordionTab>
-        <p-accordionTab header="Capacidad">
-          @for (capacidad of capacidad; track capacidad.id) {
+        <p-accordionTab header="Tipo entrada">
+          @for (entrada of tipoEntrada; track entrada.tipo_entrada_nombre) {
           <div class="flex align-items-center">
-            <p-checkbox (onChange)="onFilterChange()"
-              name="capacidad"
-              value="{{capacidad.id}}"
-              label="{{capacidad.capacidad_ram_capacidad}} G"
-              [(ngModel)]="capacidadModel"></p-checkbox>
-          </div>
-          }
-        </p-accordionTab>
-        <p-accordionTab header="Tipo ram">
-          @for (tipo of tipos; track tipo.tipo_ram_nombre) {
-          <div class="flex align-items-center">
-            <p-checkbox (onChange)="onFilterChange()"
-              name="tipo" value="{{tipo.id}}"
-              label="{{tipo.tipo_ram_nombre}}"
-              [(ngModel)]="tipoModel"></p-checkbox>
-          </div>
-          }
-        </p-accordionTab>
-        <p-accordionTab header="Velocidad">
-          @for (velocidad of velocidads; track velocidad.velocidad_ram_velocidad) {
-          <div class="flex align-items-center">
-            <p-checkbox (onChange)="onFilterChange()"
-              name="velocidad" value="{{velocidad.id}}"
-              label="{{velocidad.velocidad_ram_velocidad}}"
-              [(ngModel)]="velocidadModel"></p-checkbox>
-          </div>
-          }
-        </p-accordionTab>
-        <p-accordionTab header="Tamaño">
-          @for (tamano of tamanos; track tamanos.tamano_ram_nombre) {
-          <div class="flex align-items-center">
-            <p-checkbox (onChange)="onFilterChange()"
-              name="tamano" value="{{tamano.id}}"
-              label="{{tamano.tamano_ram_nombre}}"
-              [(ngModel)]="tamanosModel"></p-checkbox>
+            <p-checkbox (onChange)="onFilterChange()" name="marca"
+                value="{{entrada.id}}" label="{{entrada.tipo_entrada_nombre}}"
+                [(ngModel)]="tipoEntradaModel"></p-checkbox>
           </div>
           }
         </p-accordionTab>
@@ -77,10 +45,10 @@
     </div>
     }
     @if(!loading){
-    @for (ram of rams; track ram.id) {
+    @for (cable of cables; track cable.id) {
     <div style="margin-right: 10px; margin-bottom: 10px;">
       <app-mostrador-producto
-        [producto]="ram"
+        [producto]="cable"
         [descuentos]="descuentos"
         >
       </app-mostrador-producto>
@@ -97,7 +65,3 @@
     </div>
   </div>
 </div>
-
-
-
-

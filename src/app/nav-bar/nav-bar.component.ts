@@ -32,11 +32,20 @@ export class NavBarComponent {
   ]
   items = [
       {label: 'Inicio', icon: 'pi pi-home', routerLink: ['./']},
-      {label: 'Discos duros',  routerLink: ['./disco-duro']},
-      {label: 'Memorias ram',  routerLink: ['./ram']},
-      {label: 'Perifericos',  routerLink: ['./periferico']},
-      {label: 'Gestion de ventas',  routerLink: ['./gestion-ventas']},
-      {label: 'Estadisticas',  routerLink: ['./estadisticas-ventas']},
+      {label: 'Productos',
+        items: [
+          {label: 'Discos duros',  routerLink: ['./disco-duro']},
+          {label: 'Memorias ram',  routerLink: ['./ram']},
+          {label: 'Perifericos',  routerLink: ['./periferico']},
+          {label: 'cables',  routerLink: ['./cables']},
+        ]
+      },
+      {label: 'Gestion',
+        items: [
+          {label: 'Ventas',  routerLink: ['./gestion-ventas']},
+          {label: 'Recepción',  routerLink: ['./gestion-recepcion']},
+          {label: 'Estadisticas',  routerLink: ['./estadisticas-ventas']},
+        ]},
     ];
 
     aLogin(){

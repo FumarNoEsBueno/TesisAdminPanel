@@ -47,6 +47,23 @@ export class MostradorDiscoDuroComponent {
   sistemaArchivosModel: string[] = [];
   disponibilidades: any;
   disponibilidadesModel: string[] = [];
+    capacidades: any[] = [{
+    capacidad_nombre: "0 GB - 128 GB",
+    id: 1
+  },{
+    capacidad_nombre: "128 GB - 256 GB",
+    id: 2
+  },{
+    capacidad_nombre: "256 GB - 512 GB",
+    id: 3
+  },{
+    capacidad_nombre: "512 GB - 1024 GB",
+    id: 4
+  },{
+    capacidad_nombre: "1024 GB - 2048 GB",
+    id: 5
+  }];
+  capacidadesModel: number[] = [];
   precios: any[] = [{
     precio_nombre: "0 - 10.000",
     id: 1
@@ -58,37 +75,20 @@ export class MostradorDiscoDuroComponent {
     id: 3
   }];
   preciosModel: any[] = [];
-  capacidades: any[] = [{
-    capacidad_nombre: "0 GB - 100 GB",
+  esperanzasModel: number[] = [];
+    esperanzas: any[] = [{
+    esperanza_nombre: "0 - 5.000",
     id: 1
   },{
-    capacidad_nombre: "100 GB - 250 GB",
+    esperanza_nombre: "5.000 - 10.000",
     id: 2
   },{
-    capacidad_nombre: "251 GB - 500 GB",
+    esperanza_nombre: "10.000 - 15.000",
     id: 3
   },{
-    capacidad_nombre: "500 GB - 1000 GB",
-    id: 4
-  },{
-    capacidad_nombre: "1000 GB - 2000 GB",
-    id: 5
-  }];
-  capacidadesModel: string[] = [];
-  esperanzas: any[] = [{
-    esperanza_nombre: "No se como indicar la esperzanda de vida de un disco duro :V",
-    id: 1
-  },{
-    esperanza_nombre: "No se como indicar la esperzanda de vida de un disco duro :V",
-    id: 2
-  },{
-    esperanza_nombre: "No se como indicar la esperzanda de vida de un disco duro :V",
-    id: 3
-  },{
-    esperanza_nombre: "No se como indicar la esperzanda de vida de un disco duro :V",
+    esperanza_nombre: "15.000 - 20.000",
     id: 4
   }];
-  esperanzasModel: string[] = [];
   horas: any[] = [{
     hora_nombre: "0 H - 3 H",
     id: 1
@@ -105,7 +105,7 @@ export class MostradorDiscoDuroComponent {
     hora_nombre: "51 H -  H",
     id: 5
   }];
-  horasModel: string[] = [];
+  horasModel: number[] = [];
   descuentos: any;
 
   constructor(private loginService: LoginServiceService,
@@ -135,7 +135,7 @@ export class MostradorDiscoDuroComponent {
     this.comprasService.getDisponibilidad().subscribe((res: any) =>{
       this.disponibilidades = res.filter((producto: any) => producto.disponibilidad_nombre !== 'Vendido');
     });
-    this.comprasService.getDiscosDuros(this.page,[],[],[],[],[]).subscribe((res: any) =>{
+    this.comprasService.getDiscosDuros(this.page,[],[],[],[],[],[],[],[],[]).subscribe((res: any) =>{
       this.discosDuros = res.data.map((item: any) => new Producto(item));
       this.rows = res.per_page;
       this.totalRecords = res.total;
@@ -154,6 +154,10 @@ export class MostradorDiscoDuroComponent {
                                        this.estadosModel,
                                        this.tamanosModel,
                                        this.marcasModel,
+                                       this.preciosModel,
+                                       this.capacidadesModel,
+                                       this.esperanzasModel,
+                                       this.horasModel,
                                        this.sistemaArchivosModel).subscribe((res: any) =>{
 
       this.discosDuros = res.data.map((item: any) => new Producto(item));
@@ -171,6 +175,10 @@ export class MostradorDiscoDuroComponent {
                                        this.estadosModel,
                                        this.tamanosModel,
                                        this.marcasModel,
+                                       this.preciosModel,
+                                       this.capacidadesModel,
+                                       this.esperanzasModel,
+                                       this.horasModel,
                                        this.sistemaArchivosModel).subscribe((res: any) =>{
       this.discosDuros = res.data.map((item: any) => new Producto(item));
       this.rows = res.per_page;

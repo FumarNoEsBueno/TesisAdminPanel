@@ -1,0 +1,51 @@
+@for (recepcion of recepciones; track recepcion) {
+  <app-gestion-historial-recepcion
+    [recepcion]="recepcion"
+    [estados]="estados"
+    (confirmDialog) = "openConfirmDialog($event)"
+    (cancelDialog) = "openCancelDialog($event)"
+    />
+}
+
+<p-paginator
+  (onPageChange)="onPageChange($event)"
+  [first]="first" [rows]="rows"
+  [totalRecords]="totalRecords">
+</p-paginator>
+
+<p-dialog
+  header="Confirmar cancelacion de recepción"
+  [draggable]="false"
+  [(visible)]="cancelDialog">
+  <p-button
+    [style]="{ marginRight: '3px' }"
+    (onClick)="closeCancelDialog()"
+    size="small">
+    Cancelar
+  </p-button>
+  <p-button
+    (onClick)="confirmCancel()"
+    size="small">
+    Confirmar
+  </p-button>
+</p-dialog>
+
+<p-dialog
+  header="Confirmar recepción de recepción"
+  (onPageChange)="onPageChange($event)"
+  [draggable]="false"
+  [(visible)]="confirmDialog">
+  <p-button
+    [style]="{ marginRight: '3px' }"
+    (onClick)="closeConfirmDialog()"
+    size="small">
+    Cancelar
+  </p-button>
+  <p-button
+    (onClick)="confirmRecepcion()"
+    size="small">
+    Confirmar
+  </p-button>
+</p-dialog>
+
+<p-toast />

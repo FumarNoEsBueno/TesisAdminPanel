@@ -3,14 +3,7 @@
   <div style="margin-right: 1%;" [style]="{ width: '20%' }">
     <p-card header="Discos duros">
 
-      <p-accordion [activeIndex]="[0,1,2,3,4,5]" [multiple]="true">
-        <p-accordionTab header="Disponibilidad">
-          @for (disponibilidad of disponibilidades; track disponibilidades.disponibilidad_nombre) {
-          <div class="flex align-items-center">
-            <p-checkbox (onChange)="onFilterChange()" name="disponibilidad" value="{{disponibilidad.id}}" label="{{disponibilidad.disponibilidad_nombre}}" [(ngModel)]="disponibilidadesModel"></p-checkbox>
-          </div>
-          }
-        </p-accordionTab>
+            <p-accordion [activeIndex]="[0,1,2,3,4,5]" [multiple]="true">
         <p-accordionTab header="Estado">
           @for (estado of estados; track estado.estado_nombre) {
           <div class="flex align-items-center">

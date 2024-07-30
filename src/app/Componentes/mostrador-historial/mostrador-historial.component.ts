@@ -86,6 +86,12 @@ export class MostradorHistorialComponent {
     }));
     this.selectedEstado = this.estadosCompra.find(
       (e:any) => e.code === this.compra.estado_compra_id);
+    this.compra.cables.forEach((disco: any) => {
+      this.discos.push(new Producto(disco));
+    });
+    this.compra.rams.forEach((disco: any) => {
+      this.discos.push(new Producto(disco));
+    });
     this.compra.discos.forEach((disco: any) => {
       this.discos.push(new Producto(disco));
     });

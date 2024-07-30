@@ -45,6 +45,10 @@ export class MostradorPerifericoComponent {
   estadosModel: string[] = [];
   marcas: any;
   marcasModel: string[] = [];
+  tipoEntrada: any;
+  tipoEntradaModel: string[] = [];
+  tipoPerifericos: any;
+  tipoPerifericosModel: string[] = [];
   disponibilidades: any;
   disponibilidadesModel: string[] = [];
   precios: any[] = [{
@@ -59,6 +63,8 @@ export class MostradorPerifericoComponent {
   }];
   preciosModel: any[] = [];
 
+  descuentos: any;
+
   ngOnInit(){
       this.loginService.checkLogin().subscribe({
         error: () => {
@@ -71,12 +77,16 @@ export class MostradorPerifericoComponent {
   }
 
   getData(){
+    this.compraService.getDescuentos().subscribe((res) =>{
+      this.descuentos = [{id: null, descuento_porcentaje: 0}];
+      this.descuentos = this.descuentos.concat(res);
+    });
     this.compraService.getEstados().subscribe((res) => this.estados = res);
     this.compraService.getMarcas().subscribe((res) => this.marcas = res);
     this.compraService.getDisponibilidad().subscribe((res: any) =>{
       this.disponibilidades = res.filter((producto: any) => producto.disponibilidad_nombre !== 'Vendido');
     });
-    this.compraService.getPerifericos().subscribe({
+    this.compraService.getPerifericos([],[],[],[],[],[]).subscribe({
       next: (res: any) => {
         this.perifericos = res.data.map((item: any) => new Producto(item));
         this.rows = res.per_page;
@@ -89,9 +99,41 @@ export class MostradorPerifericoComponent {
   }
 
   onPageChange(event: any){
+    this.page = event.page + 1;
+    this.compraService.getPerifericos(this.page,
+                                      this.estadosModel,
+                                      this.marcasModel,
+                                      this.tipoEntradaModel,
+                                      this.tipoPerifericosModel,
+                                      this.preciosModel).subscribe({
+      next: (res: any) => {
+        this.perifericos = res.data.map((item: any) => new Producto(item));
+        this.rows = res.per_page;
+        this.totalRecords = res.total;
+        this.loading = false;
+      },
+      error: (err) => {
+      }
+    });
   }
 
-  onFilterChange(){}
+  onFilterChange(){
+    this.compraService.getPerifericos(this.page,
+                                      this.estadosModel,
+                                      this.marcasModel,
+                                      this.tipoEntradaModel,
+                                      this.tipoPerifericosModel,
+                                      this.preciosModel).subscribe({
+      next: (res: any) => {
+        this.perifericos = res.data.map((item: any) => new Producto(item));
+        this.rows = res.per_page;
+        this.totalRecords = res.total;
+        this.loading = false;
+      },
+      error: (err) => {
+      }
+    });
+  }
 
   agregarAlCarro(periferico: Producto){
     this.agregarAlCarroOutput.emit(periferico);

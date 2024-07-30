@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PaginatorModule } from 'primeng/paginator';
 import { LoginServiceService } from '../../Services/login-service.service';
 import { Router } from '@angular/router';
 import { ComprasService } from '../../Services/compras.service';
@@ -10,6 +11,7 @@ import { MessageService } from 'primeng/api';
   selector: 'app-gestion-compras',
   standalone: true,
   imports: [ToastModule,
+    PaginatorModule,
     MostradorHistorialComponent],
   templateUrl: './gestion-compras.component.html',
   providers: [MessageService],
@@ -24,6 +26,11 @@ export class GestionComprasComponent {
 
   compras: any;
   estadoCompra: any;
+
+  first = 1;
+  page = 1;
+  rows: any;
+  totalRecords: any;
 
   ngOnInit(){
       this.loginService.checkLogin().subscribe({
@@ -43,9 +50,22 @@ export class GestionComprasComponent {
       },
     });
 
-    this.comprasService.getCompras().subscribe({
+    this.comprasService.getCompras(this.page).subscribe({
       next: (res: any) => {
         this.compras = res.data;
+        this.rows = res.per_page;
+        this.totalRecords = res.total;
+      },
+    });
+  }
+
+  onPageChange(event: any){
+    this.page = event.page + 1;
+    this.comprasService.getCompras(this.page).subscribe({
+      next: (res: any) => {
+        this.compras = res.data;
+        this.rows = res.per_page;
+        this.totalRecords = res.total;
       },
     });
   }

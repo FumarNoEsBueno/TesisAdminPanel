@@ -1,7 +1,7 @@
 <p-card>
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-        <span style="font-weight: bold;">
+  <div style="display: flex;">
+    <div  [style]="{ width: '20%' }">
+      <span style="font-weight: bold;">
           Codigo:
         </span>
         <span>
@@ -14,11 +14,28 @@
           {{compra.estado_compra.estado_compra_nombre}}
         </span><br>
     </div>
+      <div style="flex: 1;">
+    <p-scrollPanel [style]="{ width: '100%', maxHeight: '250px' }">
+      @for (disco of discos; track disco.id) {
+      <app-mostrador-compra [producto]="disco" [eliminable]="false">
+      </app-mostrador-compra>
+      }
+    </p-scrollPanel>
+    </div>
     @switch(compra.estado_compra.estado_compra_nombre){
     @case(estadosCompra[0].name){
-    <div style="display: flex; flex-direction: column;">
-      <p-button label="Aprobar" (onClick)="aprobarCompra()"/>
-      <p-button label="Reprobar" (onClick)="reprobarCompra()"/>
+    <div>
+      <p-button
+        [style]="{ marginRight: '3px' }"
+        size="small"
+        (onClick)="aprobarCompra()">
+        Aprobar
+      </p-button>
+      <p-button
+        size="small"
+        (onClick)="reprobarCompra()">
+        Reprobar
+      </p-button>
     </div>
     }
     @case(estadosCompra[1].name){
@@ -42,13 +59,6 @@
       <p-button label="Confirmar entrega" (onClick)="confirmarRecepcion()"/>
     </div>
     }
-
     }
-    <p-scrollPanel [style]="{ width: '100%', maxHeight: '250px' }">
-      @for (disco of discos; track disco.id) {
-      <app-mostrador-compra [producto]="disco" [eliminable]="false">
-      </app-mostrador-compra>
-      }
-    </p-scrollPanel>
   </div>
 </p-card>
