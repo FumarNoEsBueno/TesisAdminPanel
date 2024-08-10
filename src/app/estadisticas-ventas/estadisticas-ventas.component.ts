@@ -67,11 +67,25 @@ export class EstadisticasVentasComponent {
         {
           data: data,
           backgroundColor: [documentStyle.getPropertyValue('--blue-500'),
+            documentStyle.getPropertyValue('--red-500'),
+            documentStyle.getPropertyValue('--orange-500'),
+            documentStyle.getPropertyValue('--purple-500'),
+            documentStyle.getPropertyValue('--grey-500'),
             documentStyle.getPropertyValue('--yellow-500'),
-            documentStyle.getPropertyValue('--green-500')],
+            documentStyle.getPropertyValue('--green-500'),
+            documentStyle.getPropertyValue('--white-500'),
+            documentStyle.getPropertyValue('--brown-500'),
+            documentStyle.getPropertyValue('--pink-500')],
           hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'),
-            documentStyle.getPropertyValue('--yellow-400'),
-            documentStyle.getPropertyValue('--green-400')]
+            documentStyle.getPropertyValue('--red-500'),
+            documentStyle.getPropertyValue('--orange-500'),
+            documentStyle.getPropertyValue('--purple-500'),
+            documentStyle.getPropertyValue('--grey-500'),
+            documentStyle.getPropertyValue('--yellow-500'),
+            documentStyle.getPropertyValue('--green-500'),
+            documentStyle.getPropertyValue('--white-500'),
+            documentStyle.getPropertyValue('--brown-500'),
+            documentStyle.getPropertyValue('--pink-500')],
         }
       ]
     };
@@ -107,15 +121,15 @@ export class EstadisticasVentasComponent {
   calcularProductosDiferenciados(){
     return ['Discos duros',
       'Ram',
+      'Cables',
       'Mouse',
       'Teclado',
-      'Cable',
       'Audifonos',
       'Microfono'];
   }
 
   calcularProductos(){
-    return ['Discos duros', 'Perifericos', 'Ram'];
+    return ['Discos duros', 'Ram', 'Cables', 'Perifericos'];
   }
 
   calcularCantidadPorProductosDiferenciados(listaProductos: any){
@@ -124,9 +138,12 @@ export class EstadisticasVentasComponent {
     this.ventas.forEach((venta: any) => {
       cantidadDeVentasPorProducto[0] += venta.discos.length;
       cantidadDeVentasPorProducto[1] += venta.rams.length;
+      venta.cables.forEach((cable: any) => {
+        cantidadDeVentasPorProducto[2] += cable.pivot.compra_cable_cantidad;
+      });
       venta.perifericos.forEach((periferico: any) => {
         let posicion = this.tiposPerifericos.indexOf(periferico.tipo_periferico_id);
-        cantidadDeVentasPorProducto[posicion + 2] += 1;
+        cantidadDeVentasPorProducto[posicion + 3] += 1;
       });
     });
 
@@ -137,14 +154,18 @@ export class EstadisticasVentasComponent {
     let contadorDiscos = 0;
     let contadorPerifericos = 0;
     let contadorRam = 0;
+    let contadorCables = 0;
 
     this.ventas.forEach((venta: any) => {
       contadorDiscos += venta.discos.length;
       contadorPerifericos += venta.perifericos.length;
       contadorRam += venta.rams.length;
+      venta.cables.forEach((cable: any) => {
+        contadorCables += cable.pivot.compra_cable_cantidad;
+      });
     });
 
-    return [contadorDiscos, contadorPerifericos, contadorPerifericos];
+    return [contadorDiscos, contadorPerifericos, contadorCables, contadorPerifericos];
   }
 
   calculateComprasPorUsuario(){
@@ -169,6 +190,9 @@ export class EstadisticasVentasComponent {
     this.ventas.forEach((venta: any) => {
       let posicion = listaNombres.indexOf(venta.usuario.name)
       cantidadVentaPorUsuario[posicion] += venta.discos.length + venta.rams.length + venta.discos.length;
+      venta.cables.forEach((cable: any) => {
+        cantidadVentaPorUsuario[posicion] += cable.pivot.compra_cable_cantidad;
+      });
     });
 
     return cantidadVentaPorUsuario;
@@ -215,8 +239,7 @@ export class EstadisticasVentasComponent {
       "> 100k",
     ];
     let cantidadPorPrecio = this.calcularCantodadPorPrecio(precios);
-    this.calcularData(precios,
-      cantidadPorPrecio);
+    this.calcularData(precios, cantidadPorPrecio);
   }
 
   calcularCantodadPorPrecio(listaPrecios: any){
@@ -250,6 +273,15 @@ export class EstadisticasVentasComponent {
           if(i == 10) cantidadPorPrecio[i] += 1;
         }
       });
+      venta.cables.forEach((cable: any) => {
+        for(let i = 1; i < 10; i++){
+          if(cable.cable_precio < 10000*i){
+            cantidadPorPrecio[i-1] += cable.pivot.compra_cable_cantidad;
+            break;
+          }
+          if(i == 10) cantidadPorPrecio[i] += 1;
+        }
+      });
     });
 
     return cantidadPorPrecio;
@@ -269,6 +301,10 @@ export class EstadisticasVentasComponent {
       venta.rams.forEach((ram: any) => {
         let posicion = listaMarcas.indexOf(ram.marca_id);
         cantidadDeVentasPorMarca[posicion] += 1;
+      });
+      venta.cables.forEach((cable: any) => {
+        let posicion = listaMarcas.indexOf(cable.marca_id);
+        cantidadDeVentasPorMarca[posicion] += cable.pivot.compra_cable_cantidad;
       });
     });
 
