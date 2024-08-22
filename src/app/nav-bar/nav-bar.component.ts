@@ -51,7 +51,7 @@ export class NavBarComponent {
     aLogin(){
       this.loginService.checkLogin().subscribe({
         next: (res: any) => {
-            this.router.navigate(['/home'])
+            this.router.navigate(['/perfil'])
         },
         error: (err: any) => {
           this.router.navigate(['/'])

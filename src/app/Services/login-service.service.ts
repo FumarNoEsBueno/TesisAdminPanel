@@ -32,4 +32,10 @@ export class LoginServiceService {
     const headers = new HttpHeaders().set("Authorization","Bearer " + token);
     return this.http.post(this.url + 'revoke_token',null , { headers });
   }
+
+  cambiarContraseña(nuevaContraseña: any, contraseñaActual: any){
+    let token = this.getToken();
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'update_password', {actual:contraseñaActual,contrasena_nueva: nuevaContraseña}, { headers });
+  }
 }

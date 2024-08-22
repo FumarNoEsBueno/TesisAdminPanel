@@ -1,0 +1,91 @@
+<div style="margin-top: 20px;">
+  <p>Gestion de contraseña</p>
+  <div style="margin-top: 1%;">
+    <div>
+      <label for="volumen">Contraseña actual:</label>
+    </div>
+    <input
+    pInputText
+    id="volumen"
+    class="p-inputtext-sm"
+    type="password"
+    aria-describedby="peso-help"
+    [(ngModel)]="contrasenaActual" />
+  </div>
+  <div style="margin-top: 1%;">
+    <div>
+      <label for="volumen">Contraseña nueva:</label>
+    </div>
+    <input
+    pInputText
+    id="volumen"
+    type="password"
+    class="p-inputtext-sm"
+    aria-describedby="peso-help"
+    [(ngModel)]="contrasenaNueva" />
+  </div>
+  <div style="margin-top: 1%;">
+    <div>
+      <label for="volumen">Contraseña nueva (repetir):</label>
+    </div>
+    <input
+    pInputText
+    type="password"
+    id="volumen"
+    class="p-inputtext-sm"
+    aria-describedby="peso-help"
+    [(ngModel)]="contrasenaNuevaRepetir" />
+  </div>
+  <div style="margin-top: 3%;">
+    <p-button
+      size="small"
+      [disabled]="!(contrasenaActual != '' && contrasenaNueva.length > 6 && contrasenaNueva == contrasenaNuevaRepetir)"
+      (onClick)="cambiarContrasena()">
+      Cambiar contraseña
+    </p-button>
+  </div>
+</div>
+@if(privilegies == 2){
+<div style="margin-top: 20px;">
+  <p>Agregar un nuevo usuario</p>
+    <div>
+      <label for="volumen">Nombre de nuevo usuario:</label>
+    </div>
+    <input
+    pInputText
+    id="volumen"
+    class="p-inputtext-sm"
+    aria-describedby="peso-help"
+    [(ngModel)]="nombreUsuario" />
+  </div>
+  <div style="margin-top: 1%;">
+    <div>
+      <label for="volumen">Correo de nuevo usuario:</label>
+    </div>
+    <input
+    pInputText
+    id="volumen"
+    class="p-inputtext-sm"
+    aria-describedby="peso-help"
+    [(ngModel)]="correoUsuario" />
+  </div>
+  <div style="margin-top: 1%;">
+    <div>
+      <label for="volumen">numero de nuevo usuario:</label>
+    </div>
+    <input
+    pInputText
+    id="volumen"
+    class="p-inputtext-sm"
+    aria-describedby="peso-help"
+    [(ngModel)]="numeroUsuario" />
+  </div>
+  <div style="margin-top: 3%;">
+    <p-button
+      size="small"
+      [disabled]="!(numeroUsuario != '' && nombreUsuario != '' && correoUsuario != '' )"
+      (onClick)="crearUsuarioNuevo()">
+      Crear usuario nuevo
+    </p-button>
+  </div>
+  }

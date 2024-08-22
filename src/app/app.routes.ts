@@ -9,6 +9,7 @@ import { GestionComprasComponent } from './Componentes/gestion-compras/gestion-c
 import { EstadisticasVentasComponent } from './estadisticas-ventas/estadisticas-ventas.component';
 import { GestionRecepcionComponent } from './gestion-recepcion/gestion-recepcion.component';
 import { MostradorCablesComponent } from './mostrador-cables/mostrador-cables.component';
+import { GestionPerfilComponent } from './gestion-perfil/gestion-perfil.component';
 
 export const routes: Routes = [{
   path: 'home',
@@ -46,6 +47,10 @@ export const routes: Routes = [{
   path: 'estadisticas-ventas',
   component: EstadisticasVentasComponent,
   title: 'MidTech: estadisticas ventas'
+},{
+  path: 'perfil',
+  component: GestionPerfilComponent,
+  title: 'MidTech: profile'
 },{
   path: 'recover',
   component: RecoverComponent,
