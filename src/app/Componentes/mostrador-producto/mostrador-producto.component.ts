@@ -9,11 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { ComprasService } from '../../Services/compras.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-mostrador-producto',
   standalone: true,
   imports: [
+    InputTextModule,
     ToastModule,
     CardModule,
     DropdownModule,
@@ -39,11 +41,11 @@ export class MostradorProductoComponent {
 
   visible = false;
   selectedDescuento: any;
+  tempDescuento: any;
 
   ngOnInit(){
-    console.log(this.producto);
-    this.selectedDescuento = this.descuentos.find(
-      (descuento: any) => this.producto.descuento == descuento.descuento_porcentaje);
+    this.selectedDescuento = this.producto.descuento;
+    this.tempDescuento = this.producto.descuento;
   }
 
   show() {
@@ -51,8 +53,7 @@ export class MostradorProductoComponent {
     }
 
   guardarCambios(){
-    this.producto.descuento = this.selectedDescuento.descuento_porcentaje;
-    this.producto.descuentoId = this.selectedDescuento.id;
+    this.producto.descuento = this.selectedDescuento;
     this.comprasService.updateProducto(this.producto).subscribe((res: any) => {
       this.show();
     });
@@ -64,6 +65,13 @@ export class MostradorProductoComponent {
 
   mostrarDetalles(){
     this.visible = true;
+  }
+
+  onInput(event: any){
+    if(this.selectedDescuento != null){
+      if(this.selectedDescuento > 9) return event.charCode == 8;
+    }
+    return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
   }
 
 }

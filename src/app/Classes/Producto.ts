@@ -14,7 +14,6 @@ export class Producto {
   tamano: any;
   tipo_entrada: any;
   descuento: any;
-  descuentoId: any;
 
   descripcion: any;
   tipo_periferico: any;
@@ -31,7 +30,6 @@ export class Producto {
   constructor(producto: any) {
 
     this.id = producto.id;
-    this.descuento = producto.descuento_porcentaje;
 
     if(producto.periferico_nombre != null){
       this.tipoProducto = "periferico";
@@ -48,6 +46,7 @@ export class Producto {
       this.nombre = producto.disco_duro_nombre;
       this.precio = producto.disco_duro_precio;
       this.marca = producto.marca_nombre;
+      this.descuento = producto.disco_duro_descuento;
       this.crystaldisk = producto.disco_duro_crystaldisk;
       this.imagenUrl = producto.disco_duro_foto;
       this.esperanzaVida = producto.disco_duro_esperanza_vida;

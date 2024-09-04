@@ -37,18 +37,27 @@
       }
       }
     </div>
-    <div>
-        <p-dropdown
-          [options]="descuentos"
-          [(ngModel)]="selectedDescuento"
-          optionLabel="descuento_porcentaje"
-          placeholder="Seleccione descuento" />
+    <div style="margin-top: 3%;display: flex; justify-content: space-between;">
+      <div><span>Descuento: </span></div>
+      <div style="margin-right: 5%;">
+        <input
+        style="width: 40px; height: 10px;"
+        (keypress)="onInput($event)"
+        pInputText
+        id="email"
+        class="p-inputtext-sm"
+        aria-describedby="email-help"
+        [(ngModel)]="selectedDescuento" />
+      <span>% </span>
+      </div>
     </div>
-    <div>
-        <p-button
+    <div style="text-align: right;
+      margin-right: 3%;
+      margin-top: 3%;">
+      <p-button
           size="small"
           (onClick)="guardarCambios()">
-          save
+          Guardar
         </p-button>
     </div>
   </p-card>
