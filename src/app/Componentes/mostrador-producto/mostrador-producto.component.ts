@@ -10,12 +10,15 @@ import { ComprasService } from '../../Services/compras.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
+import { CheckboxModule } from 'primeng/checkbox';
+import { profile } from 'console';
 
 @Component({
   selector: 'app-mostrador-producto',
   standalone: true,
   imports: [
     InputTextModule,
+    CheckboxModule,
     ToastModule,
     CardModule,
     DropdownModule,
@@ -40,12 +43,14 @@ export class MostradorProductoComponent {
   @Output() agregarAlCarro = new EventEmitter<Producto>();
 
   visible = false;
+  destacado: any;
   selectedDescuento: any;
   tempDescuento: any;
 
   ngOnInit(){
     this.selectedDescuento = this.producto.descuento;
     this.tempDescuento = this.producto.descuento;
+    this.destacado = (this.producto.destacado == 1);
   }
 
   show() {
@@ -53,7 +58,9 @@ export class MostradorProductoComponent {
     }
 
   guardarCambios(){
+
     this.producto.descuento = this.selectedDescuento;
+    this.producto.destacado = this.destacado;
     this.comprasService.updateProducto(this.producto).subscribe((res: any) => {
       this.show();
     });

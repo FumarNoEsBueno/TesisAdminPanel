@@ -12,6 +12,12 @@ export class LoginServiceService {
     private http:HttpClient
   ) { }
 
+  crearUsuarioNuevo(body: any){
+    const token = this.getToken();
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'create_user', body, { headers });
+  }
+
   login(credentials: any){
     return this.http.post(this.url + 'admin_login', credentials);
   }

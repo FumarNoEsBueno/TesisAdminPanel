@@ -14,46 +14,46 @@ import { GestionPerfilComponent } from './gestion-perfil/gestion-perfil.componen
 export const routes: Routes = [{
   path: 'home',
   component: HomePageComponent,
-  title: 'MidTech: Low cost'
+  title: 'Biobío Reciclajes'
 },{
   path: 'ram',
   component: MostradorRamComponent,
-  title: 'MidTech: Rams'
+  title: 'Biobío Reciclajes: Rams'
 },{
   path: 'periferico',
   component: MostradorPerifericoComponent,
-  title: 'MidTech: Perifericos'
+  title: 'Biobío Reciclajes: Perifericos'
 },{
   path: 'cables',
   component: MostradorCablesComponent,
-  title: 'MidTech: Cables'
+  title: 'Biobío Reciclajes: Cables'
 },{
   path: 'disco-duro',
   component: MostradorDiscoDuroComponent,
-  title: 'MidTech: Discos duros'
+  title: 'Biobío Reciclajes: Discos duros'
 },{
   path: '',
   component: LoginComponent,
-  title: 'MidTech: login'
+  title: 'Biobío Reciclajes: login'
 },{
   path: 'gestion-ventas',
   component: GestionComprasComponent,
-  title: 'MidTech: gestion ventas'
+  title: 'Biobío Reciclajes: gestion ventas'
 },{
   path: 'gestion-recepcion',
   component: GestionRecepcionComponent,
-  title: 'MidTech: gestion recepción'
+  title: 'Biobío Reciclajes: gestion recepción'
 },{
   path: 'estadisticas-ventas',
   component: EstadisticasVentasComponent,
-  title: 'MidTech: estadisticas ventas'
+  title: 'Biobío Reciclajes: estadisticas ventas'
 },{
   path: 'perfil',
   component: GestionPerfilComponent,
-  title: 'MidTech: profile'
+  title: 'Biobío Reciclajes: profile'
 },{
   path: 'recover',
   component: RecoverComponent,
-  title: 'MidTech: recover'
+  title: 'Biobío Reciclajes: recover'
 },
 ];

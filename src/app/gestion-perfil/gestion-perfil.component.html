@@ -1,53 +1,55 @@
 <div style="margin-top: 20px;">
-  <p>Gestion de contraseña</p>
-  <div style="margin-top: 1%;">
-    <div>
-      <label for="volumen">Contraseña actual:</label>
+  <p-card header="Gestion de contraseña">
+    <div style="margin-top: 1%;">
+      <div>
+        <label for="volumen">Contraseña actual:</label>
+      </div>
+      <input
+      pInputText
+      id="volumen"
+      class="p-inputtext-sm"
+      type="password"
+      aria-describedby="peso-help"
+      [(ngModel)]="contrasenaActual" />
     </div>
-    <input
-    pInputText
-    id="volumen"
-    class="p-inputtext-sm"
-    type="password"
-    aria-describedby="peso-help"
-    [(ngModel)]="contrasenaActual" />
-  </div>
-  <div style="margin-top: 1%;">
-    <div>
-      <label for="volumen">Contraseña nueva:</label>
+    <div style="margin-top: 1%;">
+      <div>
+        <label for="volumen">Contraseña nueva:</label>
+      </div>
+      <input
+      pInputText
+      id="volumen"
+      type="password"
+      class="p-inputtext-sm"
+      aria-describedby="peso-help"
+      [(ngModel)]="contrasenaNueva" />
     </div>
-    <input
-    pInputText
-    id="volumen"
-    type="password"
-    class="p-inputtext-sm"
-    aria-describedby="peso-help"
-    [(ngModel)]="contrasenaNueva" />
-  </div>
-  <div style="margin-top: 1%;">
-    <div>
-      <label for="volumen">Contraseña nueva (repetir):</label>
+    <div style="margin-top: 1%;">
+      <div>
+        <label for="volumen">Contraseña nueva (repetir):</label>
+      </div>
+      <input
+      pInputText
+      type="password"
+      id="volumen"
+      class="p-inputtext-sm"
+      aria-describedby="peso-help"
+      [(ngModel)]="contrasenaNuevaRepetir" />
     </div>
-    <input
-    pInputText
-    type="password"
-    id="volumen"
-    class="p-inputtext-sm"
-    aria-describedby="peso-help"
-    [(ngModel)]="contrasenaNuevaRepetir" />
-  </div>
-  <div style="margin-top: 3%;">
-    <p-button
-      size="small"
-      [disabled]="!(contrasenaActual != '' && contrasenaNueva.length > 6 && contrasenaNueva == contrasenaNuevaRepetir)"
-      (onClick)="cambiarContrasena()">
-      Cambiar contraseña
-    </p-button>
-  </div>
+    <div style="margin-top: 3%;">
+      <p-button
+        size="small"
+        [disabled]="!(contrasenaActual != '' && contrasenaNueva.length > 6 && contrasenaNueva == contrasenaNuevaRepetir)"
+        (onClick)="cambiarContrasena()">
+        Cambiar contraseña
+      </p-button>
+    </div>
+  </p-card>
 </div>
-@if(privilegies == 2){
+@if(privilegies == 1){
 <div style="margin-top: 20px;">
-  <p>Agregar un nuevo usuario</p>
+  <p-card header="Agregar un nuevo usuario">
+  <div>
     <div>
       <label for="volumen">Nombre de nuevo usuario:</label>
     </div>
@@ -88,4 +90,6 @@
       Crear usuario nuevo
     </p-button>
   </div>
-  }
+</p-card>
+  </div>
+}

@@ -6,6 +6,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
+import {InputTextModule} from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
 
 
 @Component({
@@ -13,7 +15,9 @@ import { ToastModule } from 'primeng/toast';
   standalone: true,
   imports: [
     FormsModule,
+    CardModule,
     DropdownModule,
+    InputTextModule,
     ButtonModule,
     ToastModule
   ],
@@ -40,6 +44,7 @@ export class GestionPerfilComponent {
     this.loginService.checkLogin().subscribe({
       next: (res: any) => {
         this.privilegies = res.admin_privilegies;
+        console.log(res);
       }
     });
   }
@@ -57,6 +62,21 @@ export class GestionPerfilComponent {
   }
 
   crearUsuarioNuevo(){
+    let body = {
+      name: this.nombreUsuario,
+      number: this.numeroUsuario,
+      email: this.correoUsuario
+    }
+
+    this.loginService.crearUsuarioNuevo(body).subscribe({
+      next: (res) => {
+        this.nombreUsuario = "";
+        this.numeroUsuario = "";
+        this.correoUsuario = "";
+      },
+      error: (err) => {
+      }
+    });
   }
 
 }

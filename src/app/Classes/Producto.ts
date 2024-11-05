@@ -14,6 +14,7 @@ export class Producto {
   tamano: any;
   tipo_entrada: any;
   descuento: any;
+  destacado: any;
 
   descripcion: any;
   tipo_periferico: any;
@@ -47,6 +48,7 @@ export class Producto {
       this.precio = producto.disco_duro_precio;
       this.marca = producto.marca_nombre;
       this.descuento = producto.disco_duro_descuento;
+      this.destacado = producto.disco_duro_destacado;
       this.crystaldisk = producto.disco_duro_crystaldisk;
       this.imagenUrl = producto.disco_duro_foto;
       this.esperanzaVida = producto.disco_duro_esperanza_vida;

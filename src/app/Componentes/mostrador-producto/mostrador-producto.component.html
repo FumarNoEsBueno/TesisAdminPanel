@@ -51,6 +51,15 @@
       <span>% </span>
       </div>
     </div>
+    <div style="margin-top: 3%;display: flex; justify-content: space-between;">
+      <div><span>Destacado: </span></div>
+      <div style="margin-right: 13%;">
+      <p-checkbox
+        [(ngModel)]="destacado"
+        [binary]="true"
+        inputId="binary" />
+      </div>
+    </div>
     <div style="text-align: right;
       margin-right: 3%;
       margin-top: 3%;">
