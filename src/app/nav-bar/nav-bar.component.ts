@@ -62,7 +62,6 @@ export class NavBarComponent {
     cerrarSesion(){
       this.loginService.cerrarSesion().subscribe({
         next: (res: any) => {
-          console.log(res);
           this.router.navigate(['/'])
         },
         error: (err: any) => {

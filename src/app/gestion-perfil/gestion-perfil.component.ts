@@ -44,7 +44,6 @@ export class GestionPerfilComponent {
     this.loginService.checkLogin().subscribe({
       next: (res: any) => {
         this.privilegies = res.admin_privilegies;
-        console.log(res);
       }
     });
   }
