@@ -53,7 +53,7 @@ export class MostradorHistorialComponent {
 
   confirmarRecepcion(){
     let tempEstado = this.estados.find(
-      (estado: any) => estado.estado_compra_slug == "cancelado");
+      (estado: any) => estado.estado_compra_slug == "retirado");
     this.actualizarEstadoCompra(tempEstado);
   }
 

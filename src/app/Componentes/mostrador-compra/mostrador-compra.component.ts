@@ -18,6 +18,24 @@ export class MostradorCompraComponent {
 
   @Output() eliminarCompra = new EventEmitter<Producto>();
 
+  precioFinal: any;
+
+  ngOnInit(){
+    if(this.producto.tipoProducto == "cable"){
+      if(this.producto.descuento){
+        this.precioFinal = Math.round((this.producto.precio)*(100 - this.producto.descuento) / 100) * this.producto.cantidad_seleccionada;
+      }else{
+        this.precioFinal = this.producto.precio * this.producto.cantidad_seleccionada;
+      }
+    }else{
+      if(this.producto.descuento){
+        this.precioFinal = Math.round((this.producto.precio)*(100 - this.producto.descuento) / 100);
+      }else{
+        this.precioFinal = this.producto.precio;
+      }
+    }
+  }
+
   eliminarDiscoDuro(){
     this.eliminarCompra.emit(this.producto);
   }

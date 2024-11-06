@@ -8,11 +8,13 @@
           {{producto.nombre}}
         </span><br>
         <span>
-          Precio: {{producto.precio * producto.cantidad_seleccionada }} Clp.
+          Precio: {{precioFinal }} Clp.
         </span><br>
+        @if(producto.cantidad_seleccionada){
         <span>
           Cantidad: {{producto.cantidad_seleccionada}}
         </span><br>
+        }
       </div>
       </div>
       @if(eliminable){

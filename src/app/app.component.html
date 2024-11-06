@@ -1,5 +1,7 @@
 <div [style]="{ marginLeft:'11%',marginRight:'11%' }">
   <app-nav-bar>
   </app-nav-bar>
+<div [style]="{ marginTop:'1%' }">
   <router-outlet (activate)="subscribeToChildEvent($event)"></router-outlet>
+</div>
 </div>

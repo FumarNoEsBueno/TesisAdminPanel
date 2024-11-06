@@ -38,8 +38,10 @@ export class Producto {
       this.imagenUrl = producto.periferico_foto;
       this.precio = producto.periferico_precio;
       this.marca = producto.marca_nombre;
+      this.descuento = producto.periferico_descuento;
       this.tipo_entrada = producto.tipo_entrada_nombre;
       this.tipo_periferico = producto.nombre_tipo_periferico;
+      this.destacado = producto.periferico_destacado;
     }
 
     if(producto.disco_duro_nombre != null){
@@ -66,8 +68,10 @@ export class Producto {
       this.precio = producto.cable_precio;
       this.imagenUrl = producto.cable_foto;
       this.marca = producto.marca_nombre;
+      this.descuento = producto.cable_descuento;
       this.tipo_entrada = producto.tipo_entrada_nombre;
       this.cantidad_seleccionada = 0;
+      this.destacado = producto.cable_destacado;
       if(producto.pivot != null){
         this.cantidad_seleccionada = producto.pivot.compra_cable_cantidad;
       }
@@ -79,9 +83,11 @@ export class Producto {
       this.precio = producto.ram_precio;
       this.marca = producto.marca_nombre;
       this.tipo_ram = producto.tipo_ram_nombre;
+      this.descuento = producto.ram_descuento
       this.velocidad_ram = producto.velocidad_ram_velocidad;
       this.tamano_ram = producto.tamano_ram_nombre;
       this.capacidad = producto.capacidad_ram_capacidad;
+      this.destacado = producto.ram_destacado;
     }
 
 
