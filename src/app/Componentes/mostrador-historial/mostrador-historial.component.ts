@@ -29,9 +29,34 @@ export class MostradorHistorialComponent {
 
   @Output() actualzarEvent = new EventEmitter<any>();
 
+  fechaActual = new Date();
+  fechaGarantia = new Date();
   selectedEstado: any;
   estadosCompra: any;
   discos: Producto[] = [];
+
+  ngOnInit(){
+    this.fechaGarantia = new Date(this.compra.compra_garantia);
+    this.estadosCompra = this.estados.map((e: any) => ({
+      name: e.estado_compra_nombre,
+      slug: e.estado_compra_slug,
+      code: e.id
+    }));
+    this.selectedEstado = this.estadosCompra.find(
+      (e:any) => e.code === this.compra.estado_compra_id);
+    this.compra.cables.forEach((disco: any) => {
+      this.discos.push(new Producto(disco));
+    });
+    this.compra.rams.forEach((disco: any) => {
+      this.discos.push(new Producto(disco));
+    });
+    this.compra.discos.forEach((disco: any) => {
+      this.discos.push(new Producto(disco));
+    });
+    this.compra.perifericos.forEach((disco: any) => {
+      this.discos.push(new Producto(disco));
+    });
+  }
 
   pedidoPreparado(){
     if(this.compra.metodo_despacho.metodo_despacho_slug == "retiro"){
@@ -74,29 +99,11 @@ export class MostradorHistorialComponent {
       next: (res: any) => {
         this.compra = res;
         this.actualzarEvent.emit(res);
+      },
+      error: (err: any) => {
+        console.log(err);
       }
     });
   }
 
-  ngOnInit(){
-    this.estadosCompra = this.estados.map((e: any) => ({
-      name: e.estado_compra_nombre,
-      slug: e.estado_compra_slug,
-      code: e.id
-    }));
-    this.selectedEstado = this.estadosCompra.find(
-      (e:any) => e.code === this.compra.estado_compra_id);
-    this.compra.cables.forEach((disco: any) => {
-      this.discos.push(new Producto(disco));
-    });
-    this.compra.rams.forEach((disco: any) => {
-      this.discos.push(new Producto(disco));
-    });
-    this.compra.discos.forEach((disco: any) => {
-      this.discos.push(new Producto(disco));
-    });
-    this.compra.perifericos.forEach((disco: any) => {
-      this.discos.push(new Producto(disco));
-    });
-  }
 }

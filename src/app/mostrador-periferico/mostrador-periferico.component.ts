@@ -64,9 +64,11 @@ export class MostradorPerifericoComponent {
   preciosModel: any[] = [];
 
   descuentos: any;
+  mobile: boolean = true;
 
   ngOnInit(){
-      this.loginService.checkLogin().subscribe({
+    this.getMobile();
+    this.loginService.checkLogin().subscribe({
         error: () => {
             this.router.navigate(['/'])
         },
@@ -137,5 +139,13 @@ export class MostradorPerifericoComponent {
 
   agregarAlCarro(periferico: Producto){
     this.agregarAlCarroOutput.emit(periferico);
+  }
+
+  getMobile(){
+    if(window.innerWidth <= 800){
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
   }
 }

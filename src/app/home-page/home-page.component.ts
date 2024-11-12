@@ -18,12 +18,22 @@ export class HomePageComponent {
               private router: Router) { }
 
   @Output() agregarAlCarroOutput = new EventEmitter<void>();
+  mobile: boolean = true;
 
   ngOnInit(){
+    this.getMobile();
       this.loginService.checkLogin().subscribe({
         error: () => {
             this.router.navigate(['/'])
         },
       });
+  }
+
+  getMobile(){
+    if(window.innerWidth <= 800){
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
   }
 }

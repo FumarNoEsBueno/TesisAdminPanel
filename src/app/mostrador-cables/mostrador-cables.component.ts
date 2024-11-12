@@ -61,8 +61,10 @@ export class MostradorCablesComponent {
   loading = true;
 
   descuentos: any;
+  mobile: boolean = true;
 
   ngOnInit(){
+    this.getMobile();
     this.loginService.checkLogin().subscribe({
       error: () => {
         this.router.navigate(['/'])
@@ -131,5 +133,13 @@ export class MostradorCablesComponent {
 
   reload(){
     this.onFilterChange();
+  }
+
+  getMobile(){
+    if(window.innerWidth <= 800){
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
   }
 }

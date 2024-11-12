@@ -107,12 +107,14 @@ export class MostradorDiscoDuroComponent {
   }];
   horasModel: number[] = [];
   descuentos: any;
+  mobile: boolean = true;
 
   constructor(private loginService: LoginServiceService,
               private router: Router,
               private comprasService: ComprasService){}
 
   ngOnInit(){
+    this.getMobile();
     this.loginService.checkLogin().subscribe({
       error: () => {
         this.router.navigate(['/'])
@@ -187,4 +189,11 @@ export class MostradorDiscoDuroComponent {
     });
   }
 
+  getMobile(){
+    if(window.innerWidth <= 800){
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
+  }
 }

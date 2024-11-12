@@ -1,6 +1,6 @@
 <div style="display: flex;">
 
-  <div style="margin-right: 1%;" [style]="{ width: '20%' }">
+  <div style="margin-right: 1%;" [style]="mobile ? {} : { width: '20%' }">
     <p-card header="Perifericos">
 
       <p-accordion [activeIndex]="[0,1,2,3,4,5]" [multiple]="true">

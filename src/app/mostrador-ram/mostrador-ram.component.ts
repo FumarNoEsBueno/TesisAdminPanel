@@ -63,8 +63,10 @@ export class MostradorRamComponent {
   }];
   preciosModel: any[] = [];
   descuentos: any;
+  mobile: boolean = true;
 
   ngOnInit(){
+    this.getMobile();
     this.loginService.checkLogin().subscribe({
       error: () => {
         this.router.navigate(['/'])
@@ -134,5 +136,13 @@ export class MostradorRamComponent {
       this.totalRecords = res.total;
       this.loading = false;
     });
+  }
+
+  getMobile(){
+    if(window.innerWidth <= 800){
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
   }
 }
