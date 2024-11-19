@@ -1,8 +1,50 @@
-<p-card header="Ventas por producto">
+<p-card header="Estadisticas">
 
   <div style="display: flex; justify-content: space-between;">
     <div class="card flex justify-content-center">
       <div class="flex flex-wrap gap-3">
+          <p-radioButton
+            name="Por Desde siempre"
+            value="ano"
+            (onClick)="generarEstadisticas()"
+            [(ngModel)]="parametroTiempo"
+            inputId="parametroCalculo1" />
+            <label for="parametroCalculo1" class="ml-2">
+              Desde siempre
+            </label>
+      </div>
+      <div class="flex flex-wrap gap-3">
+          <p-radioButton
+            name="Por año"
+            value="mes"
+            (onClick)="generarEstadisticas()"
+            [(ngModel)]="parametroTiempo"
+            inputId="parametroCalculo1" />
+            <label for="parametroCalculo1" class="ml-2">
+              Año actual
+            </label>
+      </div>
+      <div class="flex flex-wrap gap-3">
+            <p-radioButton
+              name="Seleccionar año"
+              value="selectAno"
+              (onClick)="generarEstadisticas()"
+              [(ngModel)]="parametroTiempo"
+              inputId="parametroCalculo1" />
+              <label for="parametroCalculo1" class="ml-2">
+                Seleccionar año
+              </label>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <p-calendar
+          [style]="{width:'70%'}"
+          [(ngModel)]="mesSeleccionado"
+          (onClose)="generarEstadisticas()"
+          view="year"
+          dateFormat="yy"
+          [readonlyInput]="true" />
+      </div>
+      <div style="margin-top: 10px" class="flex flex-wrap gap-3">
         <div class="flex align-items-center">
           <span>Calcular segun:</span>
         </div>
@@ -10,7 +52,7 @@
           <p-radioButton
             name="Tipo producto"
             value="producto"
-            (onClick)="calcularPorProducto()"
+            (onClick)="generarEstadisticas()"
             [(ngModel)]="parametroCalculo"
             inputId="parametroCalculo1" />
             <label for="parametroCalculo1" class="ml-2">
@@ -22,7 +64,7 @@
           <p-radioButton
             name="Marca"
             value="marca"
-            (onClick)="calcularPorMarca()"
+            (onClick)="generarEstadisticas()"
             [(ngModel)]="parametroCalculo"
             inputId="parametroCalculo2" />
             <label for="parametroCalculo2" class="ml-2">
@@ -34,61 +76,31 @@
           <p-radioButton
             name="precio"
             value="precio"
-            (onClick)="calcularPorPrecio()"
+            (onClick)="generarEstadisticas()"
             [(ngModel)]="parametroCalculo"
             inputId="parametroCalculo3" />
             <label for="parametroCalculo3" class="ml-2">
-              Precio
+              Ventas
             </label>
         </div>
         <div class="flex align-items-center">
           <p-radioButton
             name="usuario"
             value="usuario"
-            (onClick)="calculateComprasPorUsuario()"
+            (onClick)="generarEstadisticas()"
             [(ngModel)]="parametroCalculo"
             inputId="parametroCalculo4" />
             <label for="parametroCalculo4" class="ml-2">
-              Usuario
+              Usuarios
             </label>
         </div>
       </div>
     </div>
-    <div class="card flex"
-      style="margin-right: auto; margin-left: 30px">
-      Opciones:
-      @switch(parametroCalculo){
-        @case("producto"){
-        <div class="flex align-items-center">
-          <p-radioButton
-            name="ninguno"
-            value="ninguno"
-            (onClick)="calcularPorProducto()"
-            [(ngModel)]="subParametroCalculo"
-            inputId="subParametroCalculo" />
-            <label for="subParametroCalculo" class="ml-2">
-              N/A
-            </label>
-        </div>
-        <div class="flex align-items-center">
-          <p-radioButton
-            name="diferenciar"
-            value="diferenciar"
-            (onClick)="calcularPorProducto()"
-            [(ngModel)]="subParametroCalculo"
-            inputId="subParametroCalculo2" />
-            <label for="subParametroCalculo2" class="ml-2">
-              Diferenciar perifericos
-            </label>
-        </div>
-        }
-      }
-    </div>
-    <div class="card flex"
-      style="margin-right: auto;">
+    <div style="width: 80%">
       <p-chart
-        type="pie" [data]="data"
+        type="bar" [data]="data"
         [options]="options" />
+        <span>Total de ventas:</span>
     </div>
   </div>
 </p-card>
