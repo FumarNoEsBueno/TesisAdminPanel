@@ -34,7 +34,6 @@ export class AppComponent {
 
   ngOnInit(){
     this.getMobile();
-    console.log(this.mobile);
   }
 
   abrirCarrito(){

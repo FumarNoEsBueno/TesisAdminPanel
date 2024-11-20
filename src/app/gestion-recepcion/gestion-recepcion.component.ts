@@ -107,7 +107,6 @@ export class GestionRecepcionComponent {
   }
 
   confirmRecepcion(){
-    console.log(this.recepcionSeleccionada);
     this.comprasService.confirmarRecepcion(this.recepcionSeleccionada).subscribe({
       next: (res) => {
         this.getData();

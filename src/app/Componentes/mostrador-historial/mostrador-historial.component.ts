@@ -101,7 +101,6 @@ export class MostradorHistorialComponent {
         this.actualzarEvent.emit(res);
       },
       error: (err: any) => {
-        console.log(err);
       }
     });
   }

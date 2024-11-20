@@ -71,18 +71,6 @@
               Marca
             </label>
         </div>
-
-        <div class="flex align-items-center">
-          <p-radioButton
-            name="precio"
-            value="precio"
-            (onClick)="generarEstadisticas()"
-            [(ngModel)]="parametroCalculo"
-            inputId="parametroCalculo3" />
-            <label for="parametroCalculo3" class="ml-2">
-              Ventas
-            </label>
-        </div>
         <div class="flex align-items-center">
           <p-radioButton
             name="usuario"
@@ -92,6 +80,33 @@
             inputId="parametroCalculo4" />
             <label for="parametroCalculo4" class="ml-2">
               Usuarios
+            </label>
+        </div>
+
+      <div style="margin-top: 10px" class="flex flex-wrap gap-3">
+          <span>Opciones:</span>
+        </div>
+        <div class="flex align-items-center">
+          <p-inputSwitch
+            [style]="{transform: 'scale(0.7)'}"
+            name="precio"
+            value="porPrecio"
+            (onChange)="generarEstadisticas()"
+            [(ngModel)]="porPrecio"
+            inputId="parametroCalculo5" />
+            <label for="parametroCalculo5" class="ml-2">
+              Precio en vez de cantidad
+            </label>
+        </div>
+        <div class="flex align-items-center">
+          <p-inputSwitch
+            [style]="{transform: 'scale(0.7)'}"
+            (onChange)="generarEstadisticas()"
+            [(ngModel)]="frecuanciaAcumulada"
+            inputId="parametroCalculo5" />
+            <label
+              for="parametroCalculo6" class="ml-2">
+              Frecuencia acumulada
             </label>
         </div>
       </div>

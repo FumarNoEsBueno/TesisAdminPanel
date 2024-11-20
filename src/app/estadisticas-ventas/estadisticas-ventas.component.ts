@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { CalendarModule } from 'primeng/calendar';
 import { LoginServiceService } from '../Services/login-service.service';
 import { Router } from '@angular/router';
@@ -7,11 +8,13 @@ import { ChartModule } from 'primeng/chart';
 import { CardModule } from 'primeng/card';
 import { FormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { Producto } from '../Classes/Producto';
 
 @Component({
   selector: 'app-estadisticas-ventas',
   standalone: true,
   imports: [CardModule,
+    InputSwitchModule,
     CalendarModule,
     FormsModule,
     RadioButtonModule,
@@ -29,9 +32,9 @@ export class EstadisticasVentasComponent {
   cantidadRam: any;
 
   parametroCalculo: string = "producto";
-  subParametroCalculo: string = "ninguno";
-
   parametroTiempo: string = "mes";
+  porPrecio: boolean = false;
+  frecuanciaAcumulada: boolean = false;
 
   dataUsuario: any;
   optionsUsuario: any;
@@ -57,6 +60,17 @@ export class EstadisticasVentasComponent {
 
   generarEstadisticas(){
 
+    /*
+    TODO:
+      En los metodos donde se genera la data, cada vez que se calcula cualquier cosa,
+    vease calcular calcularProductosPorSiempre(), o similares, se recorre el arreglo
+    entero de ventas para sacar los productos. Para optimizar esto, podemos recorrerlo
+    una unica vez, y de ahi crear un arreglo de la clase Productos, y quitarnos de
+    encima un ciclo for permanentemente.
+
+    TODO:
+      Añadir eventualmente volumen y peso como parametro de calculo.
+    */
     let labels: any = [];
     let data: any = [];
 
@@ -84,17 +98,22 @@ export class EstadisticasVentasComponent {
           "Diciembre"];
         data = this.generarDataPorAno();
       break;
-
-      case "semana":
-        labels = ["1",
-          "2",
-          "3",
-          "4"];
-        data = this.generarDataPorSemana();
-      break;
     }
 
+    if(this.frecuanciaAcumulada)
+      data = this.frecuenciaAcumulada(data);
+
     this.calcularData(labels, data);
+  }
+
+  frecuenciaAcumulada(data: any[]) {
+    data.forEach((d: any) => {
+      for(let i = 0; i < d.data.length - 1; i++){
+        d.data[i + 1] += d.data[i];
+      }
+    });
+
+    return data;
   }
 
   generarDataPorSiempre(){
@@ -110,7 +129,13 @@ export class EstadisticasVentasComponent {
           response = response.concat(this.calcularMarcaPorSiempre(x));
         });
       break;
+      case "precio":
+      break;
       case "usuario":
+        let usuarios = this.getNombresUnicosDeUsuarios();
+        usuarios.forEach((x: any) => {
+          response = response.concat(this.calcularUsuariosPorSiempre(x));
+        });
       break;
     }
 
@@ -130,7 +155,13 @@ export class EstadisticasVentasComponent {
           response = response.concat(this.calcularMarcaPorAno(x));
         });
       break;
+      case "precio":
+      break;
       case "usuario":
+        let usuarios = this.getNombresUnicosDeUsuarios();
+        usuarios.forEach((x: any) => {
+          response = response.concat(this.calcularUsuariosPorAno(x));
+        });
       break;
     }
 
@@ -239,33 +270,33 @@ export class EstadisticasVentasComponent {
           if(anoObjeto != fechaUnica)return;
           switch (tipoProducto){
             case "Discos duros":
-                response += venta.discos.length;
+                  response += this.addValue(venta.discos);
               break;
               case "Mouse":
                 venta.perifericos.forEach((periferico: any) => {
                   if(periferico.tipo != "Mouse") return;
-                  response++;
+                  response += this.addValueIndividual(periferico);
                 });
               break;
               case "Teclado":
                 venta.perifericos.forEach((periferico: any) => {
                   if(periferico.tipo != "Teclado") return;
-                  response++;
+                  response += this.addValueIndividual(periferico);
                 });
               break;
               case "Microfono":
                 venta.perifericos.forEach((periferico: any) => {
                   if(periferico.tipo != "Microfono") return;
-                  response++;
+                  response += this.addValueIndividual(periferico);
                 });
               break;
               case "Cables":
                 venta.cables.forEach((cable: any) => {
-                  response += cable.pivot.compra_cable_cantidad;
+                  response += this.addValueCable(cable);
               });
               break;
               case "Ram":
-                response += venta.rams.length;
+                response += this.addValue(venta.rams);
               break;
           }
         }
@@ -281,7 +312,7 @@ export class EstadisticasVentasComponent {
   }
 
   calcularProductosPorAno(tipoProducto: String){
-    let contador: any = [];
+    let contador: any = [0,0,0,0,0,0,0,0,0,0,0,0];
     let anoActual;
     if(this.parametroTiempo == "mes"){
         anoActual = new Date().getFullYear();
@@ -290,97 +321,45 @@ export class EstadisticasVentasComponent {
       }
     this.ventas.forEach((venta: any) => {
       const fecha = new Date(venta.created_at);
-      const mes = `${fecha.getFullYear()}-${(fecha.getMonth() + 1).toString().padStart(2, '0')}`;
+      const mes = fecha.getMonth();
       const anoObjeto = fecha.getFullYear();
 
       if(anoObjeto != anoActual) return;
       switch (tipoProducto){
         case "Discos duros":
-          if(contador[mes]) {
-            contador[mes] += venta.discos.length;
-          } else {
-            contador[mes] = venta.discos.length;
-          } break;
+            contador[mes] += this.addValue(venta.discos);
+          break;
         case "Mouse":
           venta.perifericos.forEach((periferico: any) => {
-          if(periferico.tipo != "Mouse") return;
-          if(contador[mes]) {
-            contador[mes]++;
-          } else {
-            contador[mes] = 1;
-          }
-        }); break;
+            if(periferico.tipo != "Mouse") return;
+            contador[mes] += this.addValueIndividual(venta.perifericos);
+          }); break;
         case "Teclado":
-          if(contador[mes]) {
-            contador[mes]+=venta.perifericos.length;
-          } else {
-            contador[mes]+=venta.perifericos.length;
-          } break;
+          venta.perifericos.forEach((periferico: any) => {
+            if(periferico.tipo != "Teclado") return;
+            contador[mes] += this.addValueIndividual(venta.perifericos);
+          }); break;
         case "Microfono":
-          if(contador[mes]) {
-            contador[mes]+=venta.perifericos.length;
-          } else {
-            contador[mes]+=venta.perifericos.length;
-          } break;
+          venta.perifericos.forEach((periferico: any) => {
+            if(periferico.tipo != "Microfono") return;
+            contador[mes] += this.addValueIndividual(venta.perifericos);
+          }); break;
         case "Cables":
           venta.cables.forEach((cable: any) => {
-          if(contador[mes]) {
-            contador[mes] += cable.pivot.compra_cable_cantidad;
-          } else {
-            contador[mes] = cable.pivot.compra_cable_cantidad;
-          }
+            contador[mes] += this.addValueCable(cable);
         });
             break;
           case "Ram":
-          if(contador[mes]) {
-            contador[mes] += venta.rams.length;
-          } else {
-            contador[mes] = venta.rams.length;
-          } break;
+            contador[mes] += this.addValue(venta.rams);
+          break;
       }
     });
-
-    const resultado = [];
-    for (let mes = 1; mes <= 12; mes++) {
-        const mesFormateado = `${anoActual}-${mes.toString().padStart(2, '0')}`;
-        resultado.push(contador[mesFormateado] || 0)
-    }
 
     return {
       type: 'bar',
       label: tipoProducto,
-      data: resultado
+      data: contador
     };
-  }
-
-  calculateComprasPorUsuario(){
-    let listaUsuarios = this.getNombresUnicosDeUsuarios();
-    let cantidadDeVentasPorUsuario = this.getComprasPorUsuario(listaUsuarios);
-    this.calcularData(listaUsuarios, cantidadDeVentasPorUsuario);
-  }
-
-  getNombresUnicosDeUsuarios() {
-    let nombresUnicos: any = [];
-    this.ventas.forEach((venta: any) => {
-        if (!nombresUnicos.includes(venta.usuario.name)) {
-            nombresUnicos.push(venta.usuario.name);
-        }
-    });
-
-    return nombresUnicos;
-  }
-
-  getComprasPorUsuario(listaNombres: any){
-    const cantidadVentaPorUsuario = new Array(listaNombres.length).fill(0);
-    this.ventas.forEach((venta: any) => {
-      let posicion = listaNombres.indexOf(venta.usuario.name)
-      cantidadVentaPorUsuario[posicion] += venta.discos.length + venta.rams.length + venta.discos.length;
-      venta.cables.forEach((cable: any) => {
-        cantidadVentaPorUsuario[posicion] += cable.pivot.compra_cable_cantidad;
-      });
-    });
-
-    return cantidadVentaPorUsuario;
   }
 
   calcularMarcaPorSiempre(marcaProducto: any){
@@ -396,16 +375,16 @@ export class EstadisticasVentasComponent {
 
         if(anoObjeto != fechaUnica)return;
         venta.discos.forEach((disco: any) => {
-          if(disco.marca_id == marcaProducto.id)response++;
+          if(disco.marca_id == marcaProducto.id)response+= this.addValueIndividual(disco);
         });
         venta.perifericos.forEach((periferico: any) => {
-          if(periferico.marca_id == marcaProducto.id)response++;
+          if(periferico.marca_id == marcaProducto.id)response += this.addValueIndividual(periferico);
         });
         venta.rams.forEach((ram: any) => {
-          if(ram.marca_id == marcaProducto.id) response++;
+          if(ram.marca_id == marcaProducto.id) response += this.addValueIndividual(ram);
         });
         venta.cables.forEach((cable: any) => {
-          if(cable.marca_id == marcaProducto.id) response += cable.pivot.compra_cable_cantidad;
+          if(cable.marca_id == marcaProducto.id) response += this.addValueCable(cable);
         });
       });
       return response;
@@ -419,7 +398,7 @@ export class EstadisticasVentasComponent {
   }
 
   calcularMarcaPorAno(marcaProducto: any){
-    let contador: any = [];
+    let contador: any = [0,0,0,0,0,0,0,0,0,0,0,0];
     let anoActual;
     if(this.parametroTiempo == "mes"){
         anoActual = new Date().getFullYear();
@@ -428,42 +407,138 @@ export class EstadisticasVentasComponent {
       }
     this.ventas.forEach((venta: any) => {
       const fecha = new Date(venta.created_at);
-      const mes = `${fecha.getFullYear()}-${(fecha.getMonth() + 1).toString().padStart(2, '0')}`;
+      const mes = fecha.getMonth();
       const anoObjeto = fecha.getFullYear();
 
-      let response = 0;
       if(anoObjeto != anoActual) return;
         venta.discos.forEach((disco: any) => {
-          if(disco.marca_id == marcaProducto.id){
-            if(contador[mes]) {
-              contador[mes] ++;
-            } else {
-              contador[mes] = 1;
-            }
-          }
+          if(disco.marca_id == marcaProducto.id) contador[mes] += this.addValueIndividual(disco);
         });
         venta.perifericos.forEach((periferico: any) => {
-          if(periferico.marca_id == marcaProducto.id)response++;
+          if(periferico.marca_id == marcaProducto.id)contador[mes] += this.addValueIndividual(periferico);
         });
         venta.rams.forEach((ram: any) => {
-          if(ram.marca_id == marcaProducto.id) response++;
+          if(ram.marca_id == marcaProducto.id) contador[mes] += this.addValueIndividual(ram);
         });
         venta.cables.forEach((cable: any) => {
-          if(cable.marca_id == marcaProducto.id) response += cable.pivot.compra_cable_cantidad;
+          if(cable.marca_id == marcaProducto.id) contador[mes] += this.addValueCable(cable);
         });
-        return response;
-    });
 
-    const resultado = [];
-    for (let mes = 1; mes <= 12; mes++) {
-        const mesFormateado = `${anoActual}-${mes.toString().padStart(2, '0')}`;
-        resultado.push(contador[mesFormateado] || 0)
-    }
+    });
 
     return {
       type: 'bar',
       label: marcaProducto.marca_nombre,
-      data: resultado
+      data: contador
     };
   }
+
+  getNombresUnicosDeUsuarios() {
+    let nombresUnicos: any = [];
+    this.ventas.forEach((venta: any) => {
+        if (!nombresUnicos.includes(venta.usuario.name)) {
+            nombresUnicos.push(venta.usuario.name);
+        }
+    });
+
+    return nombresUnicos;
+  }
+
+  calcularUsuariosPorSiempre(usuario: String){
+
+    const fechasUnicas = [...new Set(this.ventas.map((obj: any) => new Date(obj.created_at).getFullYear()))]
+    .sort((a: any, b: any) => a - b);
+
+    const contador = fechasUnicas.map(fechaUnica => {
+      let response = 0;
+      this.ventas.forEach((venta: any) =>{
+        const fecha = new Date(venta.created_at);
+        const anoObjeto = fecha.getFullYear();
+
+        if(anoObjeto != fechaUnica)return;
+        if(venta.usuario.name == usuario){
+          response += this.addValue(venta.discos);
+          response += this.addValue(venta.perifericos);
+          response += this.addValue(venta.rams);
+          venta.cables.forEach((cable: any) => {
+            response += this.addValueCable(cable);
+          });
+        }
+      });
+      return response;
+    });
+
+    return {
+      type: 'bar',
+      label: usuario,
+      data: contador
+    };
+  }
+
+  calcularUsuariosPorAno(usuario: String){
+    let contador: any = [0,0,0,0,0,0,0,0,0,0,0,0];
+    let anoActual;
+    if(this.parametroTiempo == "mes"){
+        anoActual = new Date().getFullYear();
+      }else{
+        anoActual = new Date(this.mesSeleccionado).getFullYear();
+      }
+
+      this.ventas.forEach((venta: any) => {
+        const fecha = new Date(venta.created_at);
+        const anoObjeto = fecha.getFullYear();
+
+        if(anoObjeto != anoActual) return;
+        if(venta.usuario.name != usuario) return;
+        contador[fecha.getMonth()] += this.addValue(venta.discos);
+        contador[fecha.getMonth()] += this.addValue(venta.perifericos);
+        contador[fecha.getMonth()] += this.addValue(venta.rams);
+        venta.cables.forEach((cable: any) => {
+          contador[fecha.getMonth()] += this.addValueCable(cable);
+        });
+      });
+
+    return {
+      type: 'bar',
+      label: usuario,
+      data: contador
+    };
+  }
+
+  addValue(value: any){
+    if(this.porPrecio){
+      let response = 0;
+      value.forEach((v: any) => {
+        let producto = new Producto(v);
+        response += producto.precio;
+      });
+      return response;
+    }else{
+      return value.length;
+    }
+  }
+
+  addValueIndividual(value: any){
+    if(this.porPrecio){
+      let producto = new Producto(value);
+      let response = producto.precio;
+      return response;
+    }else{
+      return 1;
+    }
+  }
+
+  addValueCable(value: any){
+    if(this.porPrecio){
+      let response = 0;
+      value.forEach((v: any) => {
+        let producto = new Producto(v);
+        response += producto.precio * producto.cantidad;
+      });
+      return response;
+    }else{
+      return value.pivot.compra_cable_cantidad;
+    }
+  }
+
 }
