@@ -115,7 +115,11 @@
       <p-chart
         type="bar" [data]="data"
         [options]="options" />
-        <span>Total de ventas:</span>
+        <span>Total de ventas:</span><br>
+          @for (data of dataFinal; track data.etiqueta) {
+          <span>{{data.etiqueta}}: </span>
+          <span>{{data.valor}}</span><br>
+          }
     </div>
   </div>
 </p-card>

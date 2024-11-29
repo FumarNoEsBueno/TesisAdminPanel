@@ -8,6 +8,7 @@ export class Producto {
   esperanzaVida: any;
   horas: any;
   memoria: any;
+  estado: any;
   precio: any;
   marca: any;
   sistemaArchivos: any;
@@ -31,6 +32,7 @@ export class Producto {
   constructor(producto: any) {
 
     this.id = producto.id;
+    this.estado = producto.estado_nombre;
 
     if(producto.periferico_nombre != null){
       this.tipoProducto = "periferico";

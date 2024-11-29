@@ -42,6 +42,7 @@ export class EstadisticasVentasComponent {
   options: any;
   tiposPerifericos: any;
   marcas: any;
+  dataFinal: any[] = [];
 
   constructor(private loginService: LoginServiceService,
               private router: Router,
@@ -103,6 +104,7 @@ export class EstadisticasVentasComponent {
     if(this.frecuanciaAcumulada)
       data = this.frecuenciaAcumulada(data);
 
+    this.generarDataFinal(data);
     this.calcularData(labels, data);
   }
 
@@ -274,19 +276,25 @@ export class EstadisticasVentasComponent {
               break;
               case "Mouse":
                 venta.perifericos.forEach((periferico: any) => {
-                  if(periferico.tipo != "Mouse") return;
+                if(periferico.tipo_periferico_id != this.tiposPerifericos.find((tipo: any) => tipo.nombre_tipo_periferico === "Mouse").id) return;
                   response += this.addValueIndividual(periferico);
                 });
               break;
               case "Teclado":
                 venta.perifericos.forEach((periferico: any) => {
-                  if(periferico.tipo != "Teclado") return;
+                if(periferico.tipo_periferico_id != this.tiposPerifericos.find((tipo: any) => tipo.nombre_tipo_periferico === "Teclado").id) return;
                   response += this.addValueIndividual(periferico);
                 });
               break;
               case "Microfono":
                 venta.perifericos.forEach((periferico: any) => {
-                  if(periferico.tipo != "Microfono") return;
+                if(periferico.tipo_periferico_id != this.tiposPerifericos.find((tipo: any) => tipo.nombre_tipo_periferico === "Microfono").id) return;
+                  response += this.addValueIndividual(periferico);
+                });
+              break;
+              case "Audifonos":
+                venta.perifericos.forEach((periferico: any) => {
+                if(periferico.tipo_periferico_id != this.tiposPerifericos.find((tipo: any) => tipo.nombre_tipo_periferico === "Audifonos").id) return;
                   response += this.addValueIndividual(periferico);
                 });
               break;
@@ -331,17 +339,17 @@ export class EstadisticasVentasComponent {
           break;
         case "Mouse":
           venta.perifericos.forEach((periferico: any) => {
-            if(periferico.tipo != "Mouse") return;
+            if(periferico.tipo_periferico_id != this.tiposPerifericos.find((tipo: any) => tipo.nombre_tipo_periferico === "Mouse").id) return;
             contador[mes] += this.addValueIndividual(venta.perifericos);
           }); break;
         case "Teclado":
           venta.perifericos.forEach((periferico: any) => {
-            if(periferico.tipo != "Teclado") return;
+            if(periferico.tipo_periferico_id != this.tiposPerifericos.find((tipo: any) => tipo.nombre_tipo_periferico === "Teclado").id) return;
             contador[mes] += this.addValueIndividual(venta.perifericos);
           }); break;
         case "Microfono":
           venta.perifericos.forEach((periferico: any) => {
-            if(periferico.tipo != "Microfono") return;
+            if(periferico.tipo_periferico_id != this.tiposPerifericos.find((tipo: any) => tipo.nombre_tipo_periferico === "Microfono").id) return;
             contador[mes] += this.addValueIndividual(venta.perifericos);
           }); break;
         case "Cables":
@@ -539,6 +547,17 @@ export class EstadisticasVentasComponent {
     }else{
       return value.pivot.compra_cable_cantidad;
     }
+  }
+
+  generarDataFinal(data: any){
+    this.dataFinal = data.map((d: any) => {
+      let valor = d.data.reduce((acumulador: any, valorActual: any) => acumulador + valorActual, 0);
+
+      return {
+        etiqueta: d.label,
+        valor: valor,
+      };
+    });
   }
 
 }

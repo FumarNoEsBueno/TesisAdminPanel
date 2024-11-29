@@ -17,14 +17,34 @@
         <span style="font-weight: bold;">
           Garantía:
         </span>
-        @if(fechaActual < fechaGarantia){
-        <span>
-          Activa hasta {{compra.compra_garantia}}
-        </span><br>
+        @if(fechaActual <= fechaGarantia){
+        <div style="display: flex;">
+          <span>
+            <div
+              [style.backgroundColor]="'green'"
+              [style.color]="'white'"
+              [style.padding]="'5px'"
+              style="width: 60px;"
+              [style.borderRadius]="'10px'">
+              Activa
+            </div>
+            hasta {{compra.compra_garantia}}
+          </span>
+        </div>
         }@else {
-        <span>
+        <div style="display: flex;">
+          <span>
+            <div
+              [style.backgroundColor]="'red'"
+              [style.color]="'white'"
+              [style.padding]="'5px'"
+              style="width: 60px;"
+              [style.borderRadius]="'10px'">
+              Caduca
+            </div>
           Caduca deste {{compra.compra_garantia}}
-        </span><br>
+          </span>
+        </div>
         }
         }
         <span style="font-weight: bold;">
