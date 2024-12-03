@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CalendarModule } from 'primeng/calendar';
 import { LoginServiceService } from '../Services/login-service.service';
@@ -7,13 +7,17 @@ import { ComprasService } from '../Services/compras.service';
 import { ChartModule } from 'primeng/chart';
 import { CardModule } from 'primeng/card';
 import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { Producto } from '../Classes/Producto';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-estadisticas-ventas',
   standalone: true,
   imports: [CardModule,
+    ButtonModule,
     InputSwitchModule,
     CalendarModule,
     FormsModule,
@@ -23,6 +27,8 @@ import { Producto } from '../Classes/Producto';
   styleUrl: './estadisticas-ventas.component.css'
 })
 export class EstadisticasVentasComponent {
+
+  @ViewChild('chart') chart: any;
 
   ventas: any;
   mesSeleccionado: any;
@@ -560,4 +566,14 @@ export class EstadisticasVentasComponent {
     });
   }
 
+   downloadChartAsPDF() {
+      html2canvas(this.chart.el.nativeElement).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'PNG', 10, 10, 180, 160); // Ajusta el tamaño según sea necesario
+        pdf.save('chart.pdf');
+      }).catch((err) => {
+        console.error('Error al capturar el gráfico:', err);
+      });
+  }
 }
