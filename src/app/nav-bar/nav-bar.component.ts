@@ -46,6 +46,7 @@ export class NavBarComponent {
           {label: 'Recepción',  routerLink: ['./gestion-recepcion']},
           {label: 'Estadisticas',  routerLink: ['./estadisticas-ventas']},
         ]},
+      {label: 'Agregar', icon: '', routerLink: ['./agregar']},
     ];
 
     aLogin(){

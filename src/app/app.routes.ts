@@ -10,6 +10,7 @@ import { EstadisticasVentasComponent } from './estadisticas-ventas/estadisticas-
 import { GestionRecepcionComponent } from './gestion-recepcion/gestion-recepcion.component';
 import { MostradorCablesComponent } from './mostrador-cables/mostrador-cables.component';
 import { GestionPerfilComponent } from './gestion-perfil/gestion-perfil.component';
+import { InsertarProductoComponent } from './insertar-producto/insertar-producto.component';
 
 export const routes: Routes = [{
   path: 'home',
@@ -47,6 +48,10 @@ export const routes: Routes = [{
   path: 'estadisticas-ventas',
   component: EstadisticasVentasComponent,
   title: 'Biobío Reciclajes: estadisticas ventas'
+},{
+  path: 'agregar',
+  component: InsertarProductoComponent,
+  title: 'Biobío Reciclajes: agregar'
 },{
   path: 'perfil',
   component: GestionPerfilComponent,

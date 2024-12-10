@@ -1,0 +1,589 @@
+
+<p-card header="Agregar productos">
+  <div style="margin-bottom: 1%;">
+    <p-dropdown
+      (onChange)="getData()"
+      [options]="producto"
+      [(ngModel)]="selectedProducto"
+      placeholder="Seleccion tipo producto" />
+  </div>
+  <div>
+    @switch(selectedProducto){
+    @case('Disco duro'){
+    <div style="display: flex;">
+      <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+        <label>Seleccionar Id: </label>
+        <p-dropdown
+          [options]="discos"
+          [(ngModel)]="selectedDisco"
+          optionLabel="name"
+          placeholder="Seleccionar Id" />
+      </div>
+      <div style="margin-left: 4%;">
+        <p-button (click)="cargarDiscoPorId()" label="Cargar post por id"></p-button>
+      </div>
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Nombre disco duro: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="nombreProducto" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Capacidad: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="capacidad" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Precio: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="precio" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Descuento: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="descuento" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Esperanza de vida: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="esperanzaDeVida" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Horas de encendido: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="horasEncendido" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Sistema de archivos: </label>
+      <p-dropdown
+        [options]="sistemaArchivos"
+        [(ngModel)]="sistemaArchivo"
+        optionLabel="sistema_archivos_nombre"
+        placeholder="Sistema de archivos" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Tipo de entrada: </label>
+      <p-dropdown
+        [options]="tipoEntradas"
+        [(ngModel)]="tipoEntradaDiscoDuro"
+        optionLabel="tipo_entrada_nombre"
+        placeholder="Tipo Entrada" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Tamaño: </label>
+      <p-dropdown
+        [options]="tamanosDiscoDuro"
+        [(ngModel)]="tamanoDiscoDuro"
+        optionLabel="tamano_nombre"
+        placeholder="Tamaño disco duro" />
+    </div>
+    <div style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Marca: </label>
+      <p-dropdown
+        [options]="marcas"
+        [(ngModel)]="marca"
+        optionLabel="marca_nombre"
+        placeholder="Seleccione marca" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Disponibilidad: </label>
+      <p-dropdown
+        [options]="disponibilidades"
+        [(ngModel)]="disponibilidad"
+        optionLabel="disponibilidad_nombre"
+        placeholder="Seleccione disponibilidad" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Almacen: </label>
+      <p-dropdown
+        [options]="almacenes"
+        [(ngModel)]="almacen"
+        optionLabel="almacen_nombre"
+        placeholder="Seleccione almacen" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Estado: </label>
+      <p-dropdown
+        [options]="estados"
+        [(ngModel)]="estado"
+        optionLabel="estado_nombre"
+        placeholder="Selecciones estado" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Imagen disco duro: </label>
+      <p-fileUpload
+        (onSelect)="elegirImagenProducto($event)"
+        mode="basic"
+        chooseLabel="Choose"
+        chooseIcon="pi pi-upload"
+        name="demo[]"
+        accept="image/*"
+        maxFileSize="1000000" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Imagen crystaldisk: </label>
+      <p-fileUpload
+        (onSelect)="elegirImagenCristaldisck($event)"
+        mode="basic"
+        chooseLabel="Choose"
+        chooseIcon="pi pi-upload"
+        name="demo[]"
+        accept="image/*"
+        maxFileSize="1000000" />
+    </div>
+
+    <div style="display: flex; justify-content: flex-end;">
+      <div style="margin-left: 10px;">
+        <p-button
+          [disabled]="selectedDisco.id == null"
+          (onClick)="eliminarDisco()">
+          Eliminar disco
+        </p-button>
+      </div>
+      <div style="margin-left: 10px;">
+        <p-button
+          [disabled]="
+          capacidad == null ||
+          nombreProducto == null ||
+          horasEncendido == null ||
+          esperanzaDeVida == null ||
+          precio == null ||
+          disponibilidad == null ||
+          almacen == null ||
+          estado == null ||
+          tamanoDiscoDuro == null ||
+          marca == null ||
+          sistemaArchivo == null ||
+          tipoEntradaDiscoDuro == null
+          "
+          (onClick)="agregarDiscoDuro()">
+          Agregar disco
+        </p-button>
+      </div>
+    </div>
+
+    }
+    @case('Ram'){
+    <div style="display: flex;">
+      <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+        <label>Seleccionar Id: </label>
+        <p-dropdown
+          [options]="rams"
+          [(ngModel)]="selectedRam"
+          optionLabel="name"
+          placeholder="Seleccionar Id" />
+      </div>
+      <div style="margin-left: 4%;">
+        <p-button (click)="cargarRamPorId()" label="Cargar post por id"></p-button>
+      </div>
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Nombre ram: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="nombreProducto" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Descripcion ram: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="ramDescripcion" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Precio: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="precio" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Descuento: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="descuento" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Tipo Ram: </label>
+      <p-dropdown
+        [options]="tiposRam"
+        [(ngModel)]="tipoRam"
+        optionLabel="tipo_ram_nombre"
+        placeholder="Seleccione tipo de ram" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Capacidad Ram: </label>
+      <p-dropdown
+        [options]="capacidadsRam"
+        [(ngModel)]="capacidadRam"
+        optionLabel="capacidad_ram_capacidad"
+        placeholder="Seleccione Ram" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Tamaño ram: </label>
+      <p-dropdown
+        [options]="tamanosRam"
+        [(ngModel)]="tamanoRam"
+        optionLabel="tamano_ram_nombre"
+        placeholder="Seleccione tamaño de ram" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Velocidad ram: </label>
+      <p-dropdown
+        [options]="velocidadesRam"
+        [(ngModel)]="velocidadRam"
+        optionLabel="velocidad_ram_velocidad"
+        placeholder="Seleccione velocidad de ram" />
+    </div>
+    <div style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Marca: </label>
+      <p-dropdown
+        [options]="marcas"
+        [(ngModel)]="marca"
+        optionLabel="marca_nombre"
+        placeholder="Seleccione marca" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Disponibilidad: </label>
+      <p-dropdown
+        [options]="disponibilidades"
+        [(ngModel)]="disponibilidad"
+        optionLabel="disponibilidad_nombre"
+        placeholder="Seleccione disponibilidad" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Almacen: </label>
+      <p-dropdown
+        [options]="almacenes"
+        [(ngModel)]="almacen"
+        optionLabel="almacen_nombre"
+        placeholder="Seleccione almacen" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Estado: </label>
+      <p-dropdown
+        [options]="estados"
+        [(ngModel)]="estado"
+        optionLabel="estado_nombre"
+        placeholder="Selecciones estado" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Imagen: </label>
+      <p-fileUpload
+        (onSelect)="elegirImagenProducto($event)"
+        mode="basic"
+        chooseLabel="Choose"
+        chooseIcon="pi pi-upload"
+        name="demo[]"
+        accept="image/*"
+        maxFileSize="1000000" />
+    </div>
+    <div style="display: flex; justify-content: flex-end;">
+      <div style="margin-left: 10px;">
+        <p-button
+          [disabled]="selectedRam.id == null"
+          (onClick)="eliminarRam()">
+          Eliminar ram
+        </p-button>
+      </div>
+      <div style="margin-left: 10px;">
+        <p-button
+          [disabled]="
+          nombreProducto == null ||
+          precio == null ||
+          disponibilidad == null ||
+          almacen == null ||
+          estado == null ||
+          marca == null ||
+          tipoRam == null ||
+          capacidadRam == null ||
+          tamanoRam == null ||
+          velocidadRam == null
+          "
+          (onClick)="agregarRam()">
+          Agregar producto
+        </p-button>
+      </div>
+    </div>
+    }
+    @case('Periferico'){
+    <div style="display: flex;">
+      <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+        <label>Seleccionar Id: </label>
+        <p-dropdown
+          [options]="perifericos"
+          [(ngModel)]="selectedPeriferico"
+          optionLabel="name"
+          placeholder="Seleccionar Id" />
+      </div>
+      <div style="margin-left: 4%;">
+        <p-button (click)="cargarPerifericoPorId()" label="Cargar post por id"></p-button>
+      </div>
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Nombre ram: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="nombreProducto" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Descripcion periferico: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="descripcionPeriferico" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Precio: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="precio" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Descuento: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="descuento" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Tipo periferico: </label>
+      <p-dropdown
+        [options]="tiposPeriferico"
+        [(ngModel)]="tipoPeriferico"
+        optionLabel="nombre_tipo_periferico"
+        placeholder="Seleccione tipo de periferico" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Tipo entrada: </label>
+      <p-dropdown
+        [options]="tipoEntradas"
+        [(ngModel)]="tipoEntradaPeriferico"
+        optionLabel="tipo_entrada_nombre"
+        placeholder="Seleccione tipo de entrada" />
+    </div>
+    <div style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Marca: </label>
+      <p-dropdown
+        [options]="marcas"
+        [(ngModel)]="marca"
+        optionLabel="marca_nombre"
+        placeholder="Seleccione marca" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Disponibilidad: </label>
+      <p-dropdown
+        [options]="disponibilidades"
+        [(ngModel)]="disponibilidad"
+        optionLabel="disponibilidad_nombre"
+        placeholder="Seleccione disponibilidad" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Almacen: </label>
+      <p-dropdown
+        [options]="almacenes"
+        [(ngModel)]="almacen"
+        optionLabel="almacen_nombre"
+        placeholder="Seleccione almacen" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Estado: </label>
+      <p-dropdown
+        [options]="estados"
+        [(ngModel)]="estado"
+        optionLabel="estado_nombre"
+        placeholder="Selecciones estado" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Imagen: </label>
+      <p-fileUpload
+        (onSelect)="elegirImagenProducto($event)"
+        mode="basic"
+        chooseLabel="Choose"
+        chooseIcon="pi pi-upload"
+        name="demo[]"
+        accept="image/*"
+        maxFileSize="1000000" />
+    </div>
+    <div style="display: flex; justify-content: flex-end;">
+    <div style="margin-left: 10px;">
+      <p-button
+        [disabled]="selectedPeriferico.id == null"
+        (onClick)="eliminarPeriferico()">
+        Eliminar periferico
+      </p-button>
+    </div>
+    <div style="text-align: right;">
+      <p-button
+        [disabled]="
+        nombreProducto == null ||
+        precio == null ||
+        disponibilidad == null ||
+        almacen == null ||
+        estado == null ||
+        marca == null ||
+        tiposPeriferico == null ||
+        descripcionPeriferico == null ||
+        tipoEntradaPeriferico == null
+        "
+        (onClick)="agregarPerifericos()">
+        Agregar producto
+      </p-button>
+    </div>
+    </div>
+    }
+    @case('Cable'){
+    <div style="display: flex;">
+      <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+        <label>Seleccionar Id: </label>
+        <p-dropdown
+          [options]="cables"
+          [(ngModel)]="selectedCable"
+          optionLabel="name"
+          placeholder="Seleccionar Id" />
+      </div>
+      <div style="margin-left: 4%;">
+        <p-button (click)="cargarCablePorId()" label="Cargar post por id"></p-button>
+      </div>
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Nombre cable: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="nombreProducto" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Cantidad: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="cantidadCable" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Precio: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="precio" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Descuento: </label>
+      <input
+      type="text"
+      pInputText
+      [(ngModel)]="descuento" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Tipo de entrada: </label>
+      <p-dropdown
+        [options]="tipoEntradas"
+        [(ngModel)]="tipoEntradaCable"
+        optionLabel="tipo_entrada_nombre"
+        placeholder="Tipo Entrada" />
+    </div>
+    <div style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Marca: </label>
+      <p-dropdown
+        [options]="marcas"
+        [(ngModel)]="marca"
+        optionLabel="marca_nombre"
+        placeholder="Seleccione marca" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Disponibilidad: </label>
+      <p-dropdown
+        [options]="disponibilidades"
+        [(ngModel)]="disponibilidad"
+        optionLabel="disponibilidad_nombre"
+        placeholder="Seleccione disponibilidad" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Almacen: </label>
+      <p-dropdown
+        [options]="almacenes"
+        [(ngModel)]="almacen"
+        optionLabel="almacen_nombre"
+        placeholder="Seleccione almacen" />
+    </div>
+    <div  style="margin-bottom: 1%;" class="flex flex-column gap-2">
+      <label>Estado: </label>
+      <p-dropdown
+        [options]="estados"
+        [(ngModel)]="estado"
+        optionLabel="estado_nombre"
+        placeholder="Selecciones estado" />
+    </div>
+
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Imagen cable: </label>
+      <p-fileUpload
+        (onSelect)="elegirImagenProducto($event)"
+        mode="basic"
+        chooseLabel="Choose"
+        chooseIcon="pi pi-upload"
+        name="demo[]"
+        accept="image/*"
+        maxFileSize="1000000" />
+    </div>
+
+    <div style="display: flex; justify-content: flex-end;">
+    <div style="margin-left: 10px;">
+      <p-button
+        [disabled]="selectedCable.id == null"
+        (onClick)="eliminarCable()">
+        Eliminar cable
+      </p-button>
+    </div>
+    <div style="text-align: right;">
+      <p-button
+        [disabled]="
+        nombreProducto == null ||
+        cantidadCable == null ||
+        precio == null ||
+        disponibilidad == null ||
+        almacen == null ||
+        estado == null ||
+        marca == null ||
+        tipoEntradaCable == null
+        "
+        (onClick)="agregarCable()">
+        Agregar producto
+      </p-button>
+    </div>
+    </div>
+
+    }
+    }
+  </div>
+</p-card>
+<p-toast />

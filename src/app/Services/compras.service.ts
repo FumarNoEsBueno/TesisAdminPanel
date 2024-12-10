@@ -14,6 +14,114 @@ export class ComprasService {
   ) { }
 
 
+  getCable(id: any){
+    return this.http.get(this.url + 'get_cable_by_id?id='+id);
+  }
+
+  getAllCable(){
+    return this.http.get(this.url + 'get_every_cable');
+  }
+
+  deleteCable(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'delete_cable', body, { headers });
+  }
+
+  modifyCable(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'modify_cable', body, { headers });
+  }
+
+  postCable(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'post_cable', body, { headers });
+  }
+
+  getPeriferico(id: any){
+    return this.http.get(this.url + 'get_periferico_by_id?id='+id);
+  }
+
+  getAllPeriferico(){
+    return this.http.get(this.url + 'get_every_periferico');
+  }
+
+  deletePeriferico(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'delete_periferico', body, { headers });
+  }
+
+  modifyPeriferico(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'modify_periferico', body, { headers });
+  }
+
+  postPeriferico(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'post_periferico', body, { headers });
+  }
+
+  getRam(id: any){
+    return this.http.get(this.url + 'get_ram_by_id?id='+id);
+  }
+
+  getAllRam(){
+    return this.http.get(this.url + 'get_every_ram');
+  }
+
+  deleteRam(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'delete_ram', body, { headers });
+  }
+
+  modifyRam(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'modify_ram', body, { headers });
+  }
+
+  postRam(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'post_ram', body, { headers });
+  }
+
+  getDiscoDuro(id: any){
+    return this.http.get(this.url + 'get_disco_duro_by_id?id='+id);
+  }
+
+  getAllDiscoDuro(){
+    return this.http.get(this.url + 'get_every_disco_duro');
+  }
+
+  deleteDiscoDuro(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'delete_disco_duro', body, { headers });
+  }
+
+  modifyDiscoDuro(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'modify_disco_duro', body, { headers });
+  }
+
+  postDiscoDuro(body: any){
+    let token = localStorage.getItem( 'MidTechAdminToken' );
+    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    return this.http.post(this.url + 'post_disco_duro', body, { headers });
+  }
+
+  getAlmacenes(){
+    return this.http.get(this.url + 'parametros/almacen');
+  }
+
   getTipoPeriferico(){
     return this.http.get(this.url + 'parametros/tipo_periferico');
   }
@@ -52,7 +160,10 @@ export class ComprasService {
       estadoId: estado.id
     };
     let token = localStorage.getItem( 'MidTechAdminToken' );
-    const headers = new HttpHeaders().set("Authorization","Bearer " + token);
+    const headers = new HttpHeaders()
+    .set("Content-Type","multipart/form-data")
+    .set("Authorization","Bearer " + token);
+
     return this.http.post(this.url + 'update_estado_compra', body, { headers });
   }
 
