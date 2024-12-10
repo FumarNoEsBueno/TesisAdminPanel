@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ComprasService } from '../Services/compras.service';
+import { LoginServiceService } from '../Services/login-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-insertar-producto',
@@ -109,10 +111,25 @@ export class InsertarProductoComponent {
   cantidadCable: any;
   tipoEntradaCable: any;
 
+  mobile: boolean = true;
 
   constructor(
+    private loginService: LoginServiceService,
     private messageService: MessageService,
+    private router: Router,
     private comprasService: ComprasService){}
+
+  ngOnInit(){
+    this.getMobile();
+    this.loginService.checkLogin().subscribe({
+      error: () => {
+        this.router.navigate(['/'])
+      },
+      complete: () => {
+        this.getData();
+      }
+    });
+  }
 
   getData(){
 
@@ -629,5 +646,13 @@ export class InsertarProductoComponent {
         this.tipoEntradaDiscoDuro = this.tipoEntradas.find((e: any) => e.id === res.tipo_entrada_id);
       }
     });
+  }
+
+  getMobile(){
+    if(window.innerWidth <= 800){
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
   }
 }
