@@ -12,7 +12,7 @@
           Estado:
         </span>
         <span>
-          {{recepcion.recepcion_estado.recepcion_estado_nombre}}.
+          {{recepcion.recepcion_estado.recepcion_estado_nombre}}
         </span><br>
         <span style="font-weight: bold;">
           Email usuario:
@@ -44,20 +44,14 @@
           {{recepcion.solicitud_recepcion_descripcion}}
         </span><br>
       </div>
-      <!--
-      <div [style]="{ marginLeft: '30px' }">
-        <span style="font-weight: bold;">
-          Peso calculado:
-        </span>
-        <span>
-          @if(recepcion.solicitud_recepcion_peso_calculado){
-          {{recepcion.solicitud_recepcion_peso_calculado}}
-          }@else{
-          XXX
-          }
-        </span><br>
-      </div>
-        -->
+      <div style="flex: 1;">
+    <p-scrollPanel [style]="{ width: '100%', maxHeight: '250px' }">
+      @for (disco of discos; track disco.id) {
+      <app-mostrador-compra [producto]="disco" [eliminable]="false">
+      </app-mostrador-compra>
+      }
+    </p-scrollPanel>
+    </div>
       <div style="margin-left: auto">
       @switch(recepcion.recepcion_estado.recepcion_estado_nombre){
       @case("No recepcionado"){

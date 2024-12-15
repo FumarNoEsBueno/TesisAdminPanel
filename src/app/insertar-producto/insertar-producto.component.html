@@ -24,6 +24,14 @@
       </div>
     </div>
     <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Seleccionar lote: </label>
+      <p-dropdown
+        [options]="lotes"
+        [(ngModel)]="selectedlote"
+        optionLabel="name"
+        placeholder="Seleccionar Id" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
       <label>Nombre disco duro: </label>
       <input
       type="text"
@@ -132,7 +140,7 @@
       <p-fileUpload
         (onSelect)="elegirImagenProducto($event)"
         mode="basic"
-        chooseLabel="Choose"
+        chooseLabel="Elegir imagen"
         chooseIcon="pi pi-upload"
         name="demo[]"
         accept="image/*"
@@ -144,7 +152,7 @@
       <p-fileUpload
         (onSelect)="elegirImagenCristaldisck($event)"
         mode="basic"
-        chooseLabel="Choose"
+        chooseLabel="Elegir imagen"
         chooseIcon="pi pi-upload"
         name="demo[]"
         accept="image/*"
@@ -202,6 +210,14 @@
       type="text"
       pInputText
       [(ngModel)]="nombreProducto" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Seleccionar lote: </label>
+      <p-dropdown
+        [options]="lotes"
+        [(ngModel)]="selectedlote"
+        optionLabel="name"
+        placeholder="Seleccionar Id" />
     </div>
     <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
       <label>Descripcion ram: </label>
@@ -294,7 +310,7 @@
       <p-fileUpload
         (onSelect)="elegirImagenProducto($event)"
         mode="basic"
-        chooseLabel="Choose"
+        chooseLabel="Elegir imagen"
         chooseIcon="pi pi-upload"
         name="demo[]"
         accept="image/*"
@@ -348,6 +364,14 @@
       type="text"
       pInputText
       [(ngModel)]="nombreProducto" />
+    </div>
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Seleccionar lote: </label>
+      <p-dropdown
+        [options]="lotes"
+        [(ngModel)]="selectedlote"
+        optionLabel="name"
+        placeholder="Seleccionar Id" />
     </div>
     <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
       <label>Descripcion periferico: </label>
@@ -424,37 +448,37 @@
       <p-fileUpload
         (onSelect)="elegirImagenProducto($event)"
         mode="basic"
-        chooseLabel="Choose"
+        chooseLabel="Elegir imagen"
         chooseIcon="pi pi-upload"
         name="demo[]"
         accept="image/*"
         maxFileSize="1000000" />
     </div>
     <div style="display: flex; justify-content: flex-end;">
-    <div style="margin-left: 10px;">
-      <p-button
-        [disabled]="selectedPeriferico.id == null"
-        (onClick)="eliminarPeriferico()">
-        Eliminar periferico
-      </p-button>
-    </div>
-    <div style="text-align: right;">
-      <p-button
-        [disabled]="
-        nombreProducto == null ||
-        precio == null ||
-        disponibilidad == null ||
-        almacen == null ||
-        estado == null ||
-        marca == null ||
-        tiposPeriferico == null ||
-        descripcionPeriferico == null ||
-        tipoEntradaPeriferico == null
-        "
-        (onClick)="agregarPerifericos()">
-        Agregar producto
-      </p-button>
-    </div>
+      <div style="margin-left: 10px;">
+        <p-button
+          [disabled]="selectedPeriferico.id == null"
+          (onClick)="eliminarPeriferico()">
+          Eliminar periferico
+        </p-button>
+      </div>
+      <div style="margin-left: 10px;">
+        <p-button
+          [disabled]="
+          nombreProducto == null ||
+          precio == null ||
+          disponibilidad == null ||
+          almacen == null ||
+          estado == null ||
+          marca == null ||
+          tiposPeriferico == null ||
+          descripcionPeriferico == null ||
+          tipoEntradaPeriferico == null
+          "
+          (onClick)="agregarPerifericos()">
+          Agregar producto
+        </p-button>
+      </div>
     </div>
     }
     @case('Cable'){
@@ -478,7 +502,14 @@
       pInputText
       [(ngModel)]="nombreProducto" />
     </div>
-
+    <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
+      <label>Seleccionar lote: </label>
+      <p-dropdown
+        [options]="lotes"
+        [(ngModel)]="selectedlote"
+        optionLabel="name"
+        placeholder="Seleccionar Id" />
+    </div>
     <div style="margin-bottom: 1%;"  class="flex flex-column gap-2">
       <label>Cantidad: </label>
       <input
@@ -549,7 +580,7 @@
       <p-fileUpload
         (onSelect)="elegirImagenProducto($event)"
         mode="basic"
-        chooseLabel="Choose"
+        chooseLabel="Elegir imagen"
         chooseIcon="pi pi-upload"
         name="demo[]"
         accept="image/*"
@@ -557,29 +588,29 @@
     </div>
 
     <div style="display: flex; justify-content: flex-end;">
-    <div style="margin-left: 10px;">
-      <p-button
-        [disabled]="selectedCable.id == null"
-        (onClick)="eliminarCable()">
-        Eliminar cable
-      </p-button>
-    </div>
-    <div style="text-align: right;">
-      <p-button
-        [disabled]="
-        nombreProducto == null ||
-        cantidadCable == null ||
-        precio == null ||
-        disponibilidad == null ||
-        almacen == null ||
-        estado == null ||
-        marca == null ||
-        tipoEntradaCable == null
-        "
-        (onClick)="agregarCable()">
-        Agregar producto
-      </p-button>
-    </div>
+      <div style="margin-left: 10px;">
+        <p-button
+          [disabled]="selectedCable.id == null"
+          (onClick)="eliminarCable()">
+          Eliminar cable
+        </p-button>
+      </div>
+      <div style="margin-left: 10px;">
+        <p-button
+          [disabled]="
+          nombreProducto == null ||
+          cantidadCable == null ||
+          precio == null ||
+          disponibilidad == null ||
+          almacen == null ||
+          estado == null ||
+          marca == null ||
+          tipoEntradaCable == null
+          "
+          (onClick)="agregarCable()">
+          Agregar producto
+        </p-button>
+      </div>
     </div>
 
     }

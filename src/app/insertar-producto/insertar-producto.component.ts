@@ -37,6 +37,9 @@ export class InsertarProductoComponent {
   ];
   selectedProducto: any;
 
+  lotes: any;
+  selectedlote: any;
+
   productoId: any;
   discos: any;
   selectedDisco = {
@@ -139,6 +142,7 @@ export class InsertarProductoComponent {
     this.getDisponibilidades();
     this.getEstados();
     this.getAlmacenes();
+    this.getLotes();
 
     switch(this.selectedProducto){
     case('Disco duro'):
@@ -169,6 +173,10 @@ export class InsertarProductoComponent {
   reiniciarVariables(){
     this.selectedDisco = {
       name: "ninguno",
+      id: null
+    };
+    this.selectedlote = {
+      name: "NULL",
       id: null
     };
     this.capacidad = null;
@@ -298,6 +306,25 @@ export class InsertarProductoComponent {
     });
   }
 
+  getLotes(){
+    if(this.lotes != null) return;
+    this.lotes = [{
+      name: "NULL",
+      id: null
+    }]
+
+    this.comprasService.getLotes().subscribe({
+      next: (res: any) => {
+        this.lotes = this.lotes.concat(res.map((x: any) => {
+          return {
+            name: x.solicitud_recepcion_codigo,
+            id: x.id,
+          }
+        }));
+      }
+    });
+  }
+
   getTipoPeriferico(){
     if(this.tiposPeriferico != null) return;
     this.comprasService.getTipoPeriferico().subscribe({
@@ -326,6 +353,7 @@ export class InsertarProductoComponent {
       tamano: this.tamanoDiscoDuro.id,
       marca: this.marca.id,
       sistema_archivos: this.sistemaArchivo.id,
+      solicitud_recepcion_id: this.selectedlote.id,
       tipo_entrada: this.tipoEntradaDiscoDuro.id
     }
 
@@ -423,6 +451,7 @@ export class InsertarProductoComponent {
         almacen_id: this.almacen.id,
         estado_id: this.estado.id,
         marca_id: this.marca.id,
+        solicitud_recepcion_id: this.selectedlote.id,
         tipo_ram_id: this.tipoRam.id,
         capacidad_ram_id: this.capacidadRam.id,
         tamano_ram_id: this.tamanoRam.id,
@@ -476,6 +505,7 @@ export class InsertarProductoComponent {
       estado_id: this.estado.id,
       marca_id: this.marca.id,
       tipo_entrada_id: this.tipoEntradaPeriferico.id,
+      solicitud_recepcion_id: this.selectedlote.id,
       tipo_periferico_id: this.tipoPeriferico.id
     }
 
@@ -522,6 +552,7 @@ export class InsertarProductoComponent {
       cable_descuento: this.descuento,
       cable_destacado: this.destacado,
       disponibilidad_id: this.disponibilidad.id,
+      solicitud_recepcion_id: this.selectedlote.id,
       almacen_id: this.almacen.id,
       estado_id: this.estado.id,
       marca_id: this.marca.id,
@@ -578,6 +609,7 @@ export class InsertarProductoComponent {
         this.destacado = res.ram_destacado;
         this.disponibilidad = this.disponibilidades.find((e: any) => e.id === res.disponibilidad_id);
         this.almacen = this.almacenes.find((e: any) => e.id === res.almacen_id);
+        this.selectedlote = this.lotes.find((e: any) => e.id === res.solicitud_recepcion_id);
         this.estado = this.estados.find((e: any) => e.id === res.estado_id);
         this.marca = this.marcas.find((e: any) => e.id === res.marca_id);
         this.ramDescripcion = res.ram_descripcion;
@@ -600,6 +632,7 @@ export class InsertarProductoComponent {
         this.destacado = res.periferico_destacado;
         this.disponibilidad = this.disponibilidades.find((e: any) => e.id === res.disponibilidad_id);
         this.almacen = this.almacenes.find((e: any) => e.id === res.almacen_id);
+        this.selectedlote = this.lotes.find((e: any) => e.id === res.solicitud_recepcion_id);
         this.estado = this.estados.find((e: any) => e.id === res.estado_id);
         this.marca = this.marcas.find((e: any) => e.id === res.marca_id);
         this.tipoEntradaPeriferico = this.tipoEntradas.find((e: any) => e.id === res.tipo_entrada_id);
@@ -619,6 +652,7 @@ export class InsertarProductoComponent {
         this.cantidadCable = res.cable_cantidad;
         this.disponibilidad = this.disponibilidades.find((e: any) => e.id === res.disponibilidad_id);
         this.almacen = this.almacenes.find((e: any) => e.id === res.almacen_id);
+        this.selectedlote = this.lotes.find((e: any) => e.id === res.solicitud_recepcion_id);
         this.estado = this.estados.find((e: any) => e.id === res.estado_id);
         this.marca = this.marcas.find((e: any) => e.id === res.marca_id);
         this.tipoEntradaCable = this.tipoEntradas.find((e: any) => e.id === res.tipo_entrada_id);
@@ -639,6 +673,7 @@ export class InsertarProductoComponent {
         this.destacado = res.disco_duro_destacado;
         this.disponibilidad = this.disponibilidades.find((e: any) => e.id === res.disponibilidad_id);
         this.almacen = this.almacenes.find((e: any) => e.id === res.almacen_id);
+        this.selectedlote = this.lotes.find((e: any) => e.id === res.solicitud_recepcion_id);
         this.estado = this.estados.find((e: any) => e.id === res.estado_id);
         this.tamanoDiscoDuro = this.tamanosDiscoDuro.find((e: any) => e.id === res.tamano_id);
         this.marca = this.marcas.find((e: any) => e.id === res.marca_id);

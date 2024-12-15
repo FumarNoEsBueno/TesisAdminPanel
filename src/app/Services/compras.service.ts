@@ -14,6 +14,10 @@ export class ComprasService {
   ) { }
 
 
+  getLotes(){
+    return this.http.get(this.url + 'get_lotes_recepcionados');
+  }
+
   getCable(id: any){
     return this.http.get(this.url + 'get_cable_by_id?id='+id);
   }
@@ -157,11 +161,10 @@ export class ComprasService {
   updateEstadoCompra(estado: any, compraId: any){
     let body = {
       compraId: compraId,
-      estadoId: estado.id
+      estadoId: estado
     };
     let token = localStorage.getItem( 'MidTechAdminToken' );
     const headers = new HttpHeaders()
-    .set("Content-Type","multipart/form-data")
     .set("Authorization","Bearer " + token);
 
     return this.http.post(this.url + 'update_estado_compra', body, { headers });
@@ -225,16 +228,32 @@ export class ComprasService {
     return this.http.get(this.url + 'get_ventas_para_estadisticas', { headers });
   }
 
-  getRecepciones(page: number){
+  getRecepciones(page: number,
+                 codigo: any,
+                 correo: any,
+                 estado: any){
+
+    let body = {
+      page: page,
+      codigo: codigo,
+      correo: correo,
+      estado: estado
+    }
     let token = localStorage.getItem( 'MidTechAdminToken' );
     const headers = new HttpHeaders().set("Authorization","Bearer " + token);
-    return this.http.post(this.url + 'get_all_recepciones',{page: page}, { headers });
+    return this.http.post(this.url + 'get_all_recepciones', body, { headers });
   }
 
-  getCompras(page: any){
+  getCompras(page: any, codigo: any, estado: any, correo: any){
+    let body = {
+      page: page,
+      codigo: codigo,
+      correo: correo,
+      estado: estado.id
+    }
     let token = localStorage.getItem( 'MidTechAdminToken' );
     const headers = new HttpHeaders().set("Authorization","Bearer " + token);
-    return this.http.post(this.url + 'get_all_compras', {page: page}, { headers });
+    return this.http.post(this.url + 'get_all_compras', body, { headers });
   }
 
   getCables(page:any,

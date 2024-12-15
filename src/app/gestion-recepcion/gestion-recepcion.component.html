@@ -1,13 +1,46 @@
+
+<div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+  <div style="flex-grow: 1;">
+    <p-dropdown
+      [options]="estados"
+      (onChange)="filtrar()"
+      [(ngModel)]="filtroEstado"
+      optionLabel="recepcion_estado_nombre"
+      placeholder="Seleccionar estado" />
+
+  <input
+    [style]="{ marginLeft: '1%' }"
+    pInputText
+    id="codigo"
+    (change)="filtrar()"
+    type="text"
+    class="p-inputtext-sm"
+    aria-describedby="peso-help"
+    placeholder="Codigo"
+    [(ngModel)]="filtroCodigo" />
+  </div>
+
+  <p-button
+    (onClick)="filtrar()"
+    [style]="{marginLeft: '10px'}">
+    Filtrar
+  </p-button>
+</div>
 @for (recepcion of recepciones; track recepcion) {
+<div
+    [style]="{ marginTop: '1%' }"
+  >
   <app-gestion-historial-recepcion
     [recepcion]="recepcion"
     [estados]="estados"
     (confirmDialog) = "openConfirmDialog($event)"
     (cancelDialog) = "openCancelDialog($event)"
     />
+</div>
 }
 
 <p-paginator
+  [style]="{ marginTop: '1%' }"
   (onPageChange)="onPageChange($event)"
   [first]="first" [rows]="rows"
   [totalRecords]="totalRecords">

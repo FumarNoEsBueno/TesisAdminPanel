@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { LoginServiceService } from '../Services/login-service.service';
@@ -14,6 +15,7 @@ import { PaginatorModule } from 'primeng/paginator';
   standalone: true,
   imports: [PaginatorModule,
     ButtonModule,
+    InputTextModule,
     ToastModule,
     DialogModule,
     GestionHistorialRecepcionComponent],
@@ -30,6 +32,11 @@ export class GestionRecepcionComponent {
 
   recepciones: any;
   estados: any;
+  filtroEstado = {
+    id: null
+  }
+  filtroCorreo: any;
+  filtroCodigo: any;
 
   page = 1;
   first = 1;
@@ -53,8 +60,13 @@ export class GestionRecepcionComponent {
   }
 
   getData(){
-    this.comprasService.getEstadosRecepcion().subscribe((res) => this.estados = res);
-    this.comprasService.getRecepciones(this.page).subscribe({
+    this.comprasService.getEstadosRecepcion().subscribe({
+      next: (res: any) =>{
+      this.filtroEstado = res[0];
+      this.estados = res;
+    },
+    complete: () =>{
+    this.comprasService.getRecepciones(this.page, this.filtroCodigo, this.filtroCorreo, this.filtroEstado.id).subscribe({
       next: (res: any) => {
         this.recepciones = res.data;
         this.rows = res.per_page;
@@ -63,11 +75,14 @@ export class GestionRecepcionComponent {
       error: (err) => {
       }
     });
+    }
+    });
+
   }
 
   onPageChange(event: any){
     this.page = event.page + 1;
-    this.comprasService.getRecepciones(this.page).subscribe({
+    this.comprasService.getRecepciones(this.page, this.filtroCodigo, this.filtroCorreo, this.filtroEstado.id).subscribe({
       next: (res: any) => {
         this.recepciones = res.data;
         this.rows = res.per_page;
@@ -118,6 +133,18 @@ export class GestionRecepcionComponent {
 
   closeConfirmDialog(){
     this.confirmDialog = false;
+  }
+
+  filtrar(){
+    this.comprasService.getRecepciones(this.page, this.filtroCodigo, this.filtroCorreo, this.filtroEstado.id).subscribe({
+      next: (res: any) => {
+        this.recepciones = res.data;
+        this.rows = res.per_page;
+        this.totalRecords = res.total;
+      },
+      error: (err) => {
+      }
+    });
   }
 
 }

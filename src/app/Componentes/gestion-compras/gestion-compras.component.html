@@ -1,11 +1,54 @@
+<div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+  <div style="flex-grow: 1;">
+    <p-dropdown
+      [options]="estadoCompra"
+      [(ngModel)]="filtroEstado"
+      (onChange)="filtrar()"
+      optionLabel="estado_compra_nombre"
+      placeholder="Seleccionar estado" />
+
+  <input
+    [style]="{ marginLeft: '1%' }"
+    pInputText
+    id="correo"
+    (change)="filtrar()"
+    type="text"
+    class="p-inputtext-sm"
+    aria-describedby="peso-help"
+    placeholder="Correo"
+    [(ngModel)]="filtroCorreo" />
+
+  <input
+    [style]="{ marginLeft: '1%' }"
+    pInputText
+    id="codigo"
+    (change)="filtrar()"
+    type="text"
+    class="p-inputtext-sm"
+    aria-describedby="peso-help"
+    placeholder="Codigo"
+    [(ngModel)]="filtroCodigo" />
+  </div>
+
+  <p-button
+    (onClick)="filtrar()"
+    [style]="{marginLeft: '10px'}">
+    Filtrar
+  </p-button>
+</div>
+
+
 @for (compra of compras; track compra) {
+<div [style]="{ marginTop: '1%' }">
   <app-mostrador-historial
     (actualzarEvent)="show($event)"
     [estados]="estadoCompra"
     [compra]="compra"/>
+</div>
 }
 
 <p-paginator
+    [style]="{ marginTop: '1%' }"
   (onPageChange)="onPageChange($event)"
   [first]="first" [rows]="rows"
   [totalRecords]="totalRecords">

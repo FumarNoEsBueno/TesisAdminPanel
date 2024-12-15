@@ -95,7 +95,8 @@ export class MostradorHistorialComponent {
   }
 
   actualizarEstadoCompra(estado: any){
-    this.comprasService.updateEstadoCompra(estado, this.compra.id).subscribe({
+    console.log(estado.id);
+    this.comprasService.updateEstadoCompra(estado.id, this.compra.id).subscribe({
       next: (res: any) => {
         this.compra = res;
         this.actualzarEvent.emit(res);

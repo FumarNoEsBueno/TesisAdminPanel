@@ -23,9 +23,17 @@ export class MostradorCompraComponent {
   ngOnInit(){
     if(this.producto.tipoProducto == "cable"){
       if(this.producto.descuento){
-        this.precioFinal = Math.round((this.producto.precio)*(100 - this.producto.descuento) / 100) * this.producto.cantidad_seleccionada;
+        if(this.producto.cantidad_seleccionada != 0){
+          this.precioFinal = Math.round((this.producto.precio)*(100 - this.producto.descuento) / 100);
+        }else{
+          this.precioFinal = Math.round((this.producto.precio)*(100 - this.producto.descuento) / 100) * this.producto.cantidad_seleccionada;
+        }
       }else{
-        this.precioFinal = this.producto.precio * this.producto.cantidad_seleccionada;
+        if(this.producto.cantidad_seleccionada != 0){
+          this.precioFinal = this.producto.precio * this.producto.cantidad_seleccionada;
+        }else{
+          this.precioFinal = this.producto.precio;
+        }
       }
     }else{
       if(this.producto.descuento){
